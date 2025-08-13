@@ -9,14 +9,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Calcule le chiffre d'affaires du mois en cours
-        $debutMois = now()->startOfMonth()->toDateString();
-        $finMois = now()->endOfMonth()->toDateString();
-        $chiffreAffairesMois = Vente::whereBetween('created_at', [$debutMois, $finMois])
-            ->sum('total_sales_last_month');
 
-        // Passe la variable à la vue
-        return view('dashboard');
+        $chiffreAffairesMois = Sale::chiffreAffairesMois();
+
+        return view('dashboard', compact('chiffreAffairesMois'));
 
     }
 }
