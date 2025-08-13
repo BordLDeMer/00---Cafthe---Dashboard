@@ -16,7 +16,7 @@ class DashboardController extends Controller
             ->sum('total_sales_last_month');
 
         // Passe la variable à la vue
-        return view('dashboard')
+        return view('dashboard');
 
     }
 }
