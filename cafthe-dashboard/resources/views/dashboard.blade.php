@@ -78,21 +78,22 @@
     <div class="card">
         <h2>MEILLEURE VENTE DU MOIS</h2>
         <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Turkish Coffee">
-            <h3>Turkish Coffee</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <p>$4.06</p>
+            <img src="https://via.placeholder.com/150" alt="{{ $BestVente->nom }}">
+            <h3>{{ $BestVente->nom }}</h3>
+            <p>{{ $BestVente->description }}</p>
+            <p>{{ $BestVente->prix }}</p>
         </div>
     </div>
     <div class="card">
         <h2>PRODUIT EN RECUL</h2>
         <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Turkish Coffee">
-            <h3>Turkish Coffee</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <p>$4.06</p>
+            <img src="https://via.placeholder.com/150" alt="{{ $LastVente->nom }}">
+            <h3>{{ $LastVente->nom }}</h3>
+            <p>{{ $LastVente->description }}</p>
+            <p>{{ $LastVente->prix }}</p>
         </div>
     </div>
 </div>
+
 </body>
 </html>
