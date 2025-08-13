@@ -68,12 +68,13 @@
 <div class="dashboard">
     <div class="card">
         <h2>CHIFFRE AFFAIRE MOIS</h2>
-        <h1>1 000 000 €</h1>
+        <h1><p>Total: {{ $lastMonthSales[0]->total_sales_last_month ?? 'Aucune vente' }} €</p></h1>
     </div>
     <div class="card">
         <h2>BALANCE MENSUELLE</h2>
         <h1>+100 000 €</h1>
     </div>
+
     <div class="card">
         <h2>MEILLEURE VENTE DU MOIS</h2>
         <div class="product-card">
