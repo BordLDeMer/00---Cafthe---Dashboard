@@ -16,7 +16,7 @@ class Sale extends Model
         $total = Vente::whereBetween('created_at', [$debutMois, $finMois])
             ->sum('montant'); // Remplace 'montant' par le champ qui contient le montant de la vente
 
-        return response()->json([
+        return ([
             'total' => $total,
         ]);
     }
