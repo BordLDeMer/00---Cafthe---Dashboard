@@ -77,12 +77,12 @@
 
     <div class="card">
         <h2>MEILLEURE VENTE DU MOIS</h2>
-        @include('partials.produit-card', ['produit' => $meilleureVente ?? null, 'titre' => 'Meilleure vente'])
+        @include('product-card', ['produit' => $meilleureVente ?? null, 'titre' => 'Meilleure vente'])
     </div>
 
     <div class="card">
         <h2>PRODUIT EN RECUL</h2>
-        @include('partials.produit-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'])
+        @include('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'])
     </div>
 
 </div>
