@@ -10,11 +10,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $chiffreAffairesMois = (new \App\Models\Sale)->chiffreAffairesMois();
-        $meilleureVente = Produit::orderBy('ventes', 'desc')->first();
-        $mauvaiseVente = Produit::orderBy('ventes', 'asc')->first();
+        $chiffreAffairesMois = Produit::chiffreAffairesMois();
+        $meilleureVente = Produit::MeilleureVente();
+        $mauvaiseVente = Produit::MauvaiseVente();
 
         return view('dashboard', compact('chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
     }
+
 
 }

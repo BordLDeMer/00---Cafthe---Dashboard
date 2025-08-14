@@ -13,7 +13,7 @@ class Sale extends Model
         $finMois = now()->endOfMonth()->toDateString();
 
         // Récupère la somme des ventes pour le mois en cours
-        $total = produit::whereBetween('date_vente', [$debutMois, $finMois])
+        $total = Produit::whereBetween('date_vente', [$debutMois, $finMois])
             ->sum('prix_ttc');
 
         return ([
