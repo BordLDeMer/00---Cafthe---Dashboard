@@ -4,54 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Café Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e8f5e9;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            background-color: #c8e6c9;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .navbar a {
-            color: #1b5e20;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
-        .card {
-            background-color: #81c784;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            color: white;
-        }
-        .product-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px;
-            width: 200px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            color: #1b5e20;
-        }
-        .product-card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-    </style>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <div class="navbar">
@@ -72,7 +26,7 @@
     </div>
     <div class="card">
         <h2>BALANCE MENSUELLE</h2>
-        <p><strong>Chiffre d'affaires mois dernier :</strong> {{ number_format($balanceMensuelle['ca_mois_precedent'], 2, ',', ' ') }} €</p>
+        <p><strong>CA mois dernier :</strong> {{ number_format($balanceMensuelle['ca_mois_precedent'], 2, ',', ' ') }} €</p>
         <h1>
             @if($balanceMensuelle['balance'] >= 0)
                 <span style="color: green;">+{{ number_format($balanceMensuelle['balance'], 2, ',', ' ') }} €</span>
@@ -83,7 +37,7 @@
     </div>
 
     <div class="card">
-        <h2>MEILLEURE VENTE DU MOIS</h2>
+        <h2>MEILLEURE VENTE</h2>
         @include('product-card', ['produit' => $meilleureVente ?? null, 'titre' => 'Meilleure vente'])
     </div>
 
