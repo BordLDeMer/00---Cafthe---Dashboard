@@ -77,22 +77,15 @@
 
     <div class="card">
         <h2>MEILLEURE VENTE DU MOIS</h2>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="{{ $BestVente->nom }}">
-            <h3>{{ $BestVente->nom }}</h3>
-            <p>{{ $BestVente->description }}</p>
-            <p>{{ $BestVente->prix }}</p>
-        </div>
+        @include('partials.produit-card', ['produit' => $meilleureVente ?? null, 'titre' => 'Meilleure vente'])
     </div>
+
     <div class="card">
         <h2>PRODUIT EN RECUL</h2>
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="{{ $LastVente->nom }}">
-            <h3>{{ $LastVente->nom }}</h3>
-            <p>{{ $LastVente->description }}</p>
-            <p>{{ $LastVente->prix }}</p>
-        </div>
+        @include('partials.produit-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'])
     </div>
+
+</div>
 </div>
 
 </body>
