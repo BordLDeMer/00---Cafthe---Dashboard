@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Sale;
 use App\Models\Produit;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        $balanceMensuelle = Produit::balanceMensuelle();
         $chiffreAffairesMois = Produit::chiffreAffairesMois();
         $meilleureVente = Produit::MeilleureVente();
         $mauvaiseVente = Produit::MauvaiseVente();
 
-        return view('dashboard', compact('chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
+        return view('dashboard', compact('balanceMensuelle', 'chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
     }
 
 

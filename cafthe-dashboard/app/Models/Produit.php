@@ -10,6 +10,31 @@ class Produit extends Model
     protected $table = 'produit';
 
     /**
+     * Calcule la balance mensuelle (différence entre le CA du mois en cours et celui du mois précédent).
+     */
+    public static function balanceMensuelle()
+    {
+        // Chiffre d'affaires du mois en cours
+        $caMoisEnCours = self::chiffreAffairesMois()['total'];
+
+        // Chiffre d'affaires du mois précédent
+        $debutMoisPrecedent = now()->subMonth()->startOfMonth()->toDateString();
+        $finMoisPrecedent = now()->subMonth()->endOfMonth()->toDateString();
+        $caMoisPrecedent = self::whereBetween('date_vente', [$debutMoisPrecedent, $finMoisPrecedent])
+            ->sum(DB::raw('prix_ttc * ventes'));
+
+        // Calcul de la balance
+        $balance = $caMoisEnCours - $caMoisPrecedent;
+
+        return [
+            'balance' => $balance,
+            'ca_mois_en_cours' => $caMoisEnCours,
+            'ca_mois_precedent' => $caMoisPrecedent ?? 0,
+        ];
+    }
+
+
+    /**
      * Calcule le chiffre d'affaires du mois en cours à partir des ventes.
      */
     public static function chiffreAffairesMois()

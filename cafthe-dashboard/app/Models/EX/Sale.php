@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\EX;
 
+use App\Models\Produit;
 use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model

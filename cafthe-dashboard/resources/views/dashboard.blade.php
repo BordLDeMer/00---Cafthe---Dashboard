@@ -68,11 +68,18 @@
 <div class="dashboard">
     <div class="card">
         <h2>CHIFFRE AFFAIRE MOIS</h2>
-        <p>{{ number_format($chiffreAffairesMois['total'], 2, ',', ' ') }} €</p>
+        <h1>{{ number_format($chiffreAffairesMois['total'], 2, ',', ' ') }} €</h1>
     </div>
     <div class="card">
         <h2>BALANCE MENSUELLE</h2>
-        <h1>+100 000 €</h1>
+        <p><strong>Chiffre d'affaires mois dernier :</strong> {{ number_format($balanceMensuelle['ca_mois_precedent'], 2, ',', ' ') }} €</p>
+        <h1>
+            @if($balanceMensuelle['balance'] >= 0)
+                <span style="color: green;">+{{ number_format($balanceMensuelle['balance'], 2, ',', ' ') }} €</span>
+            @else
+                <span style="color: red;">{{ number_format($balanceMensuelle['balance'], 2, ',', ' ') }} €</span>
+            @endif
+        </h1>
     </div>
 
     <div class="card">
