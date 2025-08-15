@@ -10,8 +10,8 @@
 <body>
 <div class="navbar">
     <div>
-        <a href="#">Café</a>
-        <a href="#">Home</a>
+        <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
+        <a class="nav-link" href="{{ route('clients.gestion') }}">Gestion des Clients</a>
         <a href="#">Nos produits</a>
         <a href="#">Actualités</a>
     </div>
