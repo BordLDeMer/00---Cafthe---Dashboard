@@ -27,14 +27,14 @@ class Client extends Authenticatable // Utilise Authenticatable pour l'authentif
         'nom_prenom',
         'tel',
         'mail',
-        'password', // Utilisez 'password' au lieu de 'mdp' pour la compatibilité avec Auth
+        'mdp', // Utilisez 'password' au lieu de 'mdp' pour la compatibilité avec Auth
     ];
 
     /**
      * Champs cachés (ne seront pas sérialisés dans les réponses JSON).
      */
     protected $hidden = [
-        'password', // Masque le mot de passe
+        'mdp', // Masque le mot de passe
         'remember_token', // Si vous utilisez l'authentification
     ];
 
@@ -43,7 +43,7 @@ class Client extends Authenticatable // Utilise Authenticatable pour l'authentif
      */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['mdp'] = bcrypt($value);
     }
 
     /**

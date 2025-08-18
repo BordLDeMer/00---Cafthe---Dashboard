@@ -15,6 +15,4 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('balanceMensuelle', 'chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
     }
-
-
 }
