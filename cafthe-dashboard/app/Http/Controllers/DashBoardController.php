@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\EX\Controller;
+use App\Http\Controllers\BaseController;
 use App\Models\Produit;
 
-class DashBoardController
+class DashBoardController extends BaseController
 {
     public function index()
     {

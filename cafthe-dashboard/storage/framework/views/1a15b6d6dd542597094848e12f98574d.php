@@ -24,14 +24,14 @@
             <tbody>
             <?php $__empty_1 = true; $__currentLoopData = $vendeurs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $vendeur): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr>
-                    <td><?php echo e($vendeur->ID_vendeur); ?></td>
+                    <td><?php echo e($vendeur->ID_Vendeur); ?></td>
                     <td><?php echo e($vendeur->nom_prenom); ?></td>
                     <td><?php echo e($vendeur->tel); ?></td>
                     <td><?php echo e($vendeur->mail); ?></td>
                     <td>
-                        <a href="<?php echo e(route('vendeurs.show', ['vendeur' => $vendeur->ID_vendeur])); ?>" class="btn btn-info btn-sm">Voir</a>
-                        <a href="<?php echo e(route('vendeurs.edit', ['vendeur' => $vendeur->ID_vendeur])); ?>" class="btn btn-warning btn-sm">Modifier</a>
-                        <form action="<?php echo e(route('vendeurs.destroy', ['vendeur' => $vendeur->ID_vendeur])); ?>" method="POST" style="display:inline;">
+                        <a href="<?php echo e(route('vendeurs.show', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn btn-info btn-sm">Voir</a>
+                        <a href="<?php echo e(route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn btn-warning btn-sm">Modifier</a>
+                        <form action="<?php echo e(route('vendeurs.destroy', ['vendeur' => $vendeur->ID_Vendeur])); ?>" method="POST" style="display:inline;">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</button>

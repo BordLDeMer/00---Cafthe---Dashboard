@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Http\Controllers\BaseController;
 
-class ClientController extends Controller
+class ClientController extends BaseController
 {
     public function index()
     {

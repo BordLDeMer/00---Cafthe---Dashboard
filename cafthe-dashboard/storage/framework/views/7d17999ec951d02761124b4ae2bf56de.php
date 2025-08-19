@@ -16,9 +16,6 @@
         <a href="#">Nos produits</a>
 
     </div>
-    <div>
-        <a href="#">Espace Vendeur</a>
-    </div>
 </div>
 <div class="dashboard">
     <div class="card">

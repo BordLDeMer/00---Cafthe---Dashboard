@@ -22,6 +22,11 @@
             <input type="password" class="form-control" id="mdp" name="mdp" placeholder="Laisser vide pour conserver le mot de passe actuel">
         </div>
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        <a href="{{ route('vendeurs.show', $vendeur) }}" class="btn btn-info btn-sm">Voir</a>
         <a href="{{ route('vendeurs.index') }}" class="btn btn-secondary">Annuler</a>
     </form>
 @endsection
+@foreach($vendeurs as $vendeur)
+    <p>ID: {{ $vendeur->ID_Vendeur ?? 'NULL' }}</p>
+    <p>Vendeur: {{ print_r($vendeur->toArray(), true) }}</p>
+@endforeach

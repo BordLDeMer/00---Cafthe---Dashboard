@@ -10,7 +10,7 @@ class Vendeur extends Model
     use HasFactory;
 
     protected $table = 'vendeur';
-    protected $primaryKey = 'ID_vendeur';
+    protected $primaryKey = 'ID_Vendeur';
     public $timestamps = false;
 
     protected $fillable = [
@@ -26,6 +26,6 @@ class Vendeur extends Model
 
     public function getRouteKeyName()
     {
-        return 'ID_vendeur';
+        return 'ID_Vendeur';
     }
 }

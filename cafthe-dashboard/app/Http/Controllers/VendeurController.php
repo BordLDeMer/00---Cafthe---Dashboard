@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Http\Controllers\BaseController;
 
-class VendeurController extends Controller
+class VendeurController extends BaseController
 {
     public function index()
     {
