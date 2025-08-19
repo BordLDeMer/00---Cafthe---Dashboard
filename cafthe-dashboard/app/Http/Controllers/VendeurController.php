@@ -1,21 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Vendeur;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ClientController extends Controller
+class VendeurController extends Controller
 {
     public function index()
     {
-        $clients = Client::paginate(10); // Charge 10 clients par page
-        return view('clients.index', compact('clients'));
+        $vendeurs = Vendeur::paginate(10);
+        return view('vendeurs.index', compact('vendeurs'));
     }
 
     public function create()
     {
-        return view('clients.create');
+        return view('vendeurs.create');
     }
 
     public function store(Request $request)
@@ -23,36 +23,36 @@ class ClientController extends Controller
         $request->validate([
             'nom_prenom' => 'required|string|max:255',
             'tel' => 'required|string|max:20',
-            'mail' => 'required|email|unique:client,mail',
+            'mail' => 'required|email|unique:vendeur,mail',
             'mdp' => 'required|string|min:8',
         ]);
 
-        Client::create([
+        Vendeur::create([
             'nom_prenom' => $request->nom_prenom,
             'tel' => $request->tel,
             'mail' => $request->mail,
             'mdp' => bcrypt($request->mdp),
         ]);
 
-        return redirect()->route('clients.index')->with('success', 'Client créé avec succès.');
+        return redirect()->route('vendeurs.index')->with('success', 'Vendeur créé avec succès.');
     }
 
-    public function show(Client $client)
+    public function show(Vendeur $vendeur)
     {
-        return view('clients.show', compact('client'));
+        return view('vendeurs.show', compact('vendeur'));
     }
 
-    public function edit(Client $client)
+    public function edit(Vendeur $vendeur)
     {
-        return view('clients.edit', compact('client'));
+        return view('vendeurs.edit', compact('vendeur'));
     }
 
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Vendeur $vendeur)
     {
         $request->validate([
             'nom_prenom' => 'required|string|max:255',
             'tel' => 'required|string|max:20',
-            'mail' => 'required|email|unique:client,mail,'.$client->ID_client.',ID_client',
+            'mail' => 'required|email|unique:vendeur,mail,' . $vendeur->ID_vendeur . ',ID_vendeur',
             'mdp' => 'nullable|string|min:8',
         ]);
 
@@ -66,14 +66,14 @@ class ClientController extends Controller
             $data['mdp'] = bcrypt($request->mdp);
         }
 
-        $client->update($data);
+        $vendeur->update($data);
 
-        return redirect()->route('clients.index')->with('success', 'Client mis à jour avec succès.');
+        return redirect()->route('vendeurs.index')->with('success', 'Vendeur mis à jour avec succès.');
     }
 
-    public function destroy(Client $client)
+    public function destroy(Vendeur $vendeur)
     {
-        $client->delete();
-        return redirect()->route('clients.index')->with('success', 'Client supprimé avec succès.');
+        $vendeur->delete();
+        return redirect()->route('vendeurs.index')->with('success', 'Vendeur supprimé avec succès.');
     }
 }

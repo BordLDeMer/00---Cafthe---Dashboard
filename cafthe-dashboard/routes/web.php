@@ -7,7 +7,7 @@ use App\Http\Controllers\VendeurController;
 use Illuminate\Support\Facades\Route;
 
 // Route d'accueil
-Route::get('/', [DashBoardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // Routes pour les ventes
 Route::prefix('sales')->group(function () {
@@ -21,5 +21,9 @@ Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory
 Route::resource('clients', ClientController::class);
 
 // Routes pour les vendeurs
-Route::get('/vendeurs/{vendeur}', [VendeurController::class, 'show'])->name('vendeurs.show');
 Route::resource('vendeurs', VendeurController::class);
+
+Route::post('/vendeurs', [VendeurController::class, 'store'])->name('vendeurs.store');
+Route::get('/vendeurs/create', [VendeurController::class, 'create'])->name('vendeurs.create');
+Route::get('/vendeurs', [VendeurController::class, 'index'])->name('vendeurs.index');
+
