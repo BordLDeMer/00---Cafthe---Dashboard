@@ -121,6 +121,10 @@
       <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/barryvdh/laravel-debugbar" />
+      <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/php-debugbar/php-debugbar" />
+      <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/symfony/polyfill-php84" />
+      <excludeFolder url="file://$MODULE_DIR$/cafthe-dashboard/vendor/symfony/polyfill-php85" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

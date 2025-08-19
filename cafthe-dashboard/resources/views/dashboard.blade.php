@@ -12,8 +12,9 @@
     <div>
         <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
         <a class="nav-link" href="{{ route('clients.index') }}">Gestion des Clients</a>
+        <a class="nav-link" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
         <a href="#">Nos produits</a>
-        <a href="#">Actualités</a>
+
     </div>
     <div>
         <a href="#">Espace Vendeur</a>
