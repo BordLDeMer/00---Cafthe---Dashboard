@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Models\Client;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,5 +19,17 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+    public function boot()
+    {
+        View::composer('layouts.app', function ($view) {
+            try {
+                $clients = \App\Models\Client::limit(10)->get();
+                $view->with('clients', $clients);
+            } catch (\Exception $e) {
+                \Log::error("Erreur dans le View Composer : " . $e->getMessage());
+                $view->with('clients', collect());
+            }
+        });
+    }
 
 }

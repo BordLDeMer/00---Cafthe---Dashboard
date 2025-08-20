@@ -1,6 +1,6 @@
 <?php
 
-ini_set('memory_limit', '1024M'); // Augmente à 1 Go
+ini_set('memory_limit', '2G'); // Augmente à 2 Go
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
