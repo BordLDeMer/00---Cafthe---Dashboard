@@ -10,6 +10,7 @@ class Vendeur extends Model
     use HasFactory;
 
     protected $table = 'vendeur';
+    protected $username = 'mail';
     protected $primaryKey = 'ID_Vendeur';
     public $timestamps = false;
 
@@ -27,5 +28,9 @@ class Vendeur extends Model
     public function getRouteKeyName()
     {
         return 'ID_Vendeur';
+    }
+    public function findForPassport($username)
+    {
+        return $this->where('mail', $username)->first();  // Use your actual column name
     }
 }
