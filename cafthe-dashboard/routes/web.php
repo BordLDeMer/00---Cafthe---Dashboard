@@ -6,12 +6,13 @@ use App\Http\Controllers\VendeurController;
 use Illuminate\Support\Facades\Route;
 
 // Route d'accueil
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/', [DashboardController::class, 'index'])->name('home')->middleware('auth');;
+ Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-// Routes pour les clients
+// Route pour les clients
 Route::resource('clients', ClientController::class);
 
-// Routes pour les vendeurs
+// Route pour les vendeurs
 Route::resource('vendeurs', VendeurController::class);
 
-
+//Auth::routes();

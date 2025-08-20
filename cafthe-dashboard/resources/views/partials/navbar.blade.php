@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <!-- Logo ou nom de l'application -->
-        <a class="navbar-brand" href="{{ route('home') }}">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">
             <i class="bi bi-house-door-fill me-2"></i>
             Mon Application
         </a>
@@ -14,21 +14,10 @@
         <!-- Liens de navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('home*') ? 'active' : '' }}" href="{{ route('home') }}">
-                        <i class="bi bi-house-door-fill me-1"></i> Accueil
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('clients*') ? 'active' : '' }}" href="{{ route('clients.index') }}">
-                        <i class="bi bi-people-fill me-1"></i> Clients
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('produits*') ? 'active' : '' }}" href="{{ route('produits.index') }}">
-                        <i class="bi bi-box-seam me-1"></i> Produits
-                    </a>
-                </li>
+                        <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
+                        <a class="nav-link" href="{{ route('clients.index') }}">Gestion des Clients</a>
+                        <a class="nav-link" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
+                        <a href="#">Nos produits</a>
                 <!-- Ajoutez d'autres liens ici -->
             </ul>
 
@@ -49,12 +38,6 @@
                                 </form>
                             </li>
                         </ul>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Connexion
-                        </a>
                     </li>
                 @endauth
             </ul>
