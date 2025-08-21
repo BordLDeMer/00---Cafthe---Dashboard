@@ -2,7 +2,7 @@
     <div class="container">
         <!-- Logo ou nom de l'application -->
         <a class="navbar-brand" href="{{ route('dashboard') }}">
-            <img src="{{ asset('images/lolgo.png') }}" alt="Logo" class="img-fluid d-inline-block align-top" width="40" height="40">
+            <img src="{{ asset('images/lolgo.png') }}" alt="Logo" class="img-fluid d-inline-block align-top" width="70" height="70">
             Caf'thé
         </a>
 
@@ -14,9 +14,9 @@
         <!-- Liens de navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('clients.index') }}">Gestion des Clients</a>
-                        <a class="nav-link" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
-                        <a class="nav-link" href="https://reactjs-cafthe.benjamin.bidou.dev-campus.fr/">Nos produits</a>
+                        <a class="nav-link fs-5 ps-4 text-white" href="{{ route('clients.index') }}">Gestion des Clients</a>
+                        <a class="nav-link fs-5 ps-4 text-white" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
+                        <a class="nav-link fs-5 ps-4 text-white" href="https://reactjs-cafthe.benjamin.bidou.dev-campus.fr/">Nos produits</a>
                 <!-- Ajoutez d'autres liens ici -->
             </ul>
 
