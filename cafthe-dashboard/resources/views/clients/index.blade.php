@@ -30,6 +30,7 @@
                     <td>{{ $client->tel }}</td>
                     <td>{{ $client->mail }}</td>
                     <td>
+                        <a href="{{ route('clients.show', $client->ID_client) }}" class="btn btn-info btn-sm">Voir</a>
                         <a href="{{ route('clients.edit', $client->ID_client) }}" class="btn btn-warning btn-sm">Modifier</a>
                         <form action="{{ route('clients.destroy', $client->ID_client) }}" method="POST" style="display:inline;">
                             @csrf

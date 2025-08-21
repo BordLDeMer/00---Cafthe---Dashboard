@@ -15,20 +15,6 @@
 
     <!-- Votre CSS personnalisé -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: linen;
-            margin: 0;
-            padding: 0;
-        }
-        .dashboard {
-            display: wrap;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-    </style>
 </head>
 <body>
 @include('partials.navbar')
@@ -36,9 +22,6 @@
 <div class="dashboard">
     @yield('content')
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 @yield('scripts')
 </body>
