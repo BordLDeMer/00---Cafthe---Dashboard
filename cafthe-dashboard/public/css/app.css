@@ -9,10 +9,16 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
-
-.body {
-    background-color: blue;
+.btn-add{
+    background-color: #ad655d ;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s;
 }
+
 
 .product-card {
     width: 200px;
@@ -95,19 +101,14 @@
 .product-card-button:hover {
     background: #8B4513;
 }
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e8f5e9;
-    margin: 0;
-    padding: 0;
-}
+
 .navbar {
-    background-color: #c8e6c9;
+    background-color: darkslategray;
     padding: 10px;
     display: flex;
     justify-content: space-between;
 }
-.navbar a {
+.navbar-a {
     color: #1b5e20;
     text-decoration: none;
     margin: 0 10px;

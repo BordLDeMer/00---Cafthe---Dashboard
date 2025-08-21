@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <a href="{{ route('clients.create') }}" class="btn btn-primary mb-3">Ajouter un client</a>
+    <a href="{{ route('clients.create') }}" class="btn-add">Ajouter un client</a>
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -51,4 +51,5 @@
     <div class="d-flex justify-content-center">
         {{ $clients->links() }}
     </div>
+
 @endsection

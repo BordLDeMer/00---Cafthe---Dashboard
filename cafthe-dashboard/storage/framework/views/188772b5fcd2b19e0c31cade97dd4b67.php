@@ -8,7 +8,7 @@
         </div>
     <?php endif; ?>
 
-    <a href="<?php echo e(route('clients.create')); ?>" class="btn btn-primary mb-3">Ajouter un client</a>
+    <a href="<?php echo e(route('clients.create')); ?>" class="btn-add">Ajouter un client</a>
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -51,6 +51,7 @@
         <?php echo e($clients->links()); ?>
 
     </div>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\benjamin.bidou\00---Cafthe---Dashboard\cafthe-dashboard\resources\views/clients/index.blade.php ENDPATH**/ ?>

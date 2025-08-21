@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <a href="{{ route('vendeurs.create') }}" class="btn btn-primary mb-3">Ajouter un vendeur</a>
+    <a href="{{ route('vendeurs.create') }}" class="btn-add">Ajouter un vendeur</a>
 
     <div class="table-responsive">
         <table class="table table-striped">

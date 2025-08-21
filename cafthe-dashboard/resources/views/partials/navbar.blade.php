@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar  navbar-expand-lg navbar-dark">
     <div class="container">
         <!-- Logo ou nom de l'application -->
         <a class="navbar-brand" href="{{ route('dashboard') }}">
@@ -14,7 +14,6 @@
         <!-- Liens de navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                        <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
                         <a class="nav-link" href="{{ route('clients.index') }}">Gestion des Clients</a>
                         <a class="nav-link" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
                         <a class="nav-link" href="#">Nos produits</a>
