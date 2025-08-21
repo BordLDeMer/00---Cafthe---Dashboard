@@ -13,13 +13,19 @@ body {
     justify-content: center;
 }
 
+.dashboard-accueil {
+    display : flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 .dashboard {
     display : table-row;
-    justify-content: center;
 }
 
 .navbar {
-    background-color: darkslategray;
+    background-color: #71b762;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -33,6 +39,21 @@ body {
     font-size: 1.2em;
     cursor: pointer;
     transition: background 0.3s;
+}
+
+.btn-voir{
+    background-color: #529aa2 ;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.btn-modif{
+    background-color: #95a595 ;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
 }
 
 .product-card {
@@ -118,11 +139,12 @@ body {
 }
 
 .card {
-    background-color: #81c784;
+    background-color: #60ac39;
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
     width: 300px;
+    height: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     color: white;
@@ -146,3 +168,57 @@ body {
     }
 }
 
+
+     /* Pagination ---------------------------------------------------------------------------------------------------*/
+ .pagination {
+     display: flex;
+     padding-left: 0;
+     list-style: none;
+     border-radius: 0.25rem;
+ }
+
+.pagination .page-item {
+    margin: 0 2px;
+}
+
+.pagination .page-link {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #529aa2;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination .page-link:hover {
+    z-index: 2;
+    color: #fff;
+    text-decoration: none;
+    background-color: #529aa2;
+    border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #529aa2;
+    border-color: #529aa2;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+.pagination .page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(82, 154, 162, 0.25);
+}
+php

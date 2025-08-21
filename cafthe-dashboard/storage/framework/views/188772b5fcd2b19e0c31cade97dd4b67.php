@@ -29,8 +29,8 @@
                     <td><?php echo e($client->tel); ?></td>
                     <td><?php echo e($client->mail); ?></td>
                     <td>
-                        <a href="<?php echo e(route('clients.show', $client->ID_client)); ?>" class="btn btn-info btn-sm">Voir</a>
-                        <a href="<?php echo e(route('clients.edit', $client->ID_client)); ?>" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="<?php echo e(route('clients.show', $client->ID_client)); ?>" class="btn-voir">Voir</a>
+                        <a href="<?php echo e(route('clients.edit', $client->ID_client)); ?>" class="btn-modif">Modifier</a>
                         <form action="<?php echo e(route('clients.destroy', $client->ID_client)); ?>" method="POST" style="display:inline;">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
@@ -48,10 +48,11 @@
     </div>
 
     <!-- Liens de pagination -->
-    <div class="d-flex justify-content-center">
+    <div class="mt-4">
         <?php echo e($clients->links()); ?>
 
     </div>
+
 
 <?php $__env->stopSection(); ?>
 

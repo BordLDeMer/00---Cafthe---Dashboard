@@ -29,8 +29,8 @@
                     <td><?php echo e($vendeur->tel); ?></td>
                     <td><?php echo e($vendeur->mail); ?></td>
                     <td>
-                        <a href="<?php echo e(route('vendeurs.show', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn btn-info btn-sm">Voir</a>
-                        <a href="<?php echo e(route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="<?php echo e(route('vendeurs.show', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn-voir">Voir</a>
+                        <a href="<?php echo e(route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur])); ?>" class="btn-modif">Modifier</a>
                         <form action="<?php echo e(route('vendeurs.destroy', ['vendeur' => $vendeur->ID_Vendeur])); ?>" method="POST" style="display:inline;">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>

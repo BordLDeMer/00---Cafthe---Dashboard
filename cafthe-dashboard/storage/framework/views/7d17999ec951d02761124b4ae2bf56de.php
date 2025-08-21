@@ -2,7 +2,7 @@
     <title>Café Dashboard</title>
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
 
-<div class="dashboard">
+<div class="dashboard-accueil">
     <div class="card">
         <h2>CHIFFRE AFFAIRE MOIS</h2>
         <h1><?php echo e(number_format($chiffreAffairesMois['total'], 2, ',', ' ')); ?> €</h1>

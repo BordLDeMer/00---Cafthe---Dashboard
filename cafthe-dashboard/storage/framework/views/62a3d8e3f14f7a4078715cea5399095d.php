@@ -2,8 +2,8 @@
     <div class="container">
         <!-- Logo ou nom de l'application -->
         <a class="navbar-brand" href="<?php echo e(route('dashboard')); ?>">
-            <i class="bi bi-house-door-fill me-2"></i>
-            Mon Application
+            <img src="<?php echo e(asset('images/lolgo.png')); ?>" alt="Logo" class="img-fluid d-inline-block align-top" width="40" height="40">
+            Caf'thé
         </a>
 
         <!-- Bouton pour mobile -->

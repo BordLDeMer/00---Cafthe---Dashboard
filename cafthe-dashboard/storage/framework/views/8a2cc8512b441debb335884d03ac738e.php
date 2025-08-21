@@ -6,14 +6,17 @@
         </div>
 
         <div class="product-card-image">
-            <?php if($produit->image && file_exists(public_path('images/produits/' . $produit->image))): ?>
-                <img src="<?php echo e(asset('images/produits/' . $produit->image)); ?>"
-                     alt="<?php echo e($produit->designation_produit); ?>">
+            <?php if($produit && $produit->image && file_exists(public_path('images/' . $produit->image))): ?>
+                <img src="<?php echo e(asset('images/' . $produit->image)); ?>"
+                     alt="<?php echo e($produit->designation_produit ?? 'Image du produit'); ?>"
+                     class="img-fluid">
             <?php else: ?>
-                <img src="https://via.placeholder.com/150/8B4513/FFFFFF?text=Pas+d'image"
-                     alt="Image non disponible">
+                <img src="<?php echo e(asset('images/coffee-8861674_1280.png')); ?>"
+                     alt="Image par défaut"
+                     class="img-fluid">
             <?php endif; ?>
         </div>
+
 
         <div class="product-card-body">
             <p><strong>Nom :</strong> <?php echo e($produit->designation_produit); ?></p>

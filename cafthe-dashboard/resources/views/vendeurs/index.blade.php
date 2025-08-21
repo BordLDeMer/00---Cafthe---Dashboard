@@ -30,8 +30,8 @@
                     <td>{{ $vendeur->tel }}</td>
                     <td>{{ $vendeur->mail }}</td>
                     <td>
-                        <a href="{{ route('vendeurs.show', ['vendeur' => $vendeur->ID_Vendeur]) }}" class="btn btn-info btn-sm">Voir</a>
-                        <a href="{{ route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur]) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{{ route('vendeurs.show', ['vendeur' => $vendeur->ID_Vendeur]) }}" class="btn-voir">Voir</a>
+                        <a href="{{ route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur]) }}" class="btn-modif">Modifier</a>
                         <form action="{{ route('vendeurs.destroy', ['vendeur' => $vendeur->ID_Vendeur]) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

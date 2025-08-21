@@ -6,14 +6,17 @@
         </div>
 
         <div class="product-card-image">
-            @if($produit->image && file_exists(public_path('images/produits/' . $produit->image)))
-                <img src="{{ asset('images/produits/' . $produit->image) }}"
-                     alt="{{ $produit->designation_produit }}">
+            @if($produit && $produit->image && file_exists(public_path('images/' . $produit->image)))
+                <img src="{{ asset('images/' . $produit->image) }}"
+                     alt="{{ $produit->designation_produit ?? 'Image du produit' }}"
+                     class="img-fluid">
             @else
-                <img src="https://via.placeholder.com/150/8B4513/FFFFFF?text=Pas+d'image"
-                     alt="Image non disponible">
+                <img src="{{ asset('images/coffee-8861674_1280.png') }}"
+                     alt="Image par défaut"
+                     class="img-fluid">
             @endif
         </div>
+
 
         <div class="product-card-body">
             <p><strong>Nom :</strong> {{ $produit->designation_produit }}</p>
