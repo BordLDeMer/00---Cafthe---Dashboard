@@ -29,7 +29,6 @@
                     <td><?php echo e($client->tel); ?></td>
                     <td><?php echo e($client->mail); ?></td>
                     <td>
-                        <a href="<?php echo e(route('clients.show', $client->ID_client)); ?>" class="btn btn-info btn-sm">Voir</a>
                         <a href="<?php echo e(route('clients.edit', $client->ID_client)); ?>" class="btn btn-warning btn-sm">Modifier</a>
                         <form action="<?php echo e(route('clients.destroy', $client->ID_client)); ?>" method="POST" style="display:inline;">
                             <?php echo csrf_field(); ?>

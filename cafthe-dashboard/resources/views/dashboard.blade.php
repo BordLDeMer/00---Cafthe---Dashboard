@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
+
+@section('content')
     <title>Café Dashboard</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-</head>
-<body>
-<div class="navbar">
-    <div>
-        <a class="nav-link" href="{{ route('dashboard') }}">Accueil</a>
-        <a class="nav-link" href="{{ route('clients.index') }}">Gestion des Clients</a>
-        <a class="nav-link" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
-        <a href="#">Nos produits</a>
-    </div>
-</div>
 <div class="dashboard">
     <div class="card">
         <h2>CHIFFRE AFFAIRE MOIS</h2>
@@ -42,9 +30,5 @@
         <h2>PRODUIT EN RECUL</h2>
         @include('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'])
     </div>
-
 </div>
-</div>
-
-</body>
-</html>
+@endsection

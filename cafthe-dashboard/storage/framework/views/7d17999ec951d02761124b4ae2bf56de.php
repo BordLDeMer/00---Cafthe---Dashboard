@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php $__env->startSection('content'); ?>
     <title>Café Dashboard</title>
     <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
 
-</head>
-<body>
-<div class="navbar">
-    <div>
-        <a class="nav-link" href="<?php echo e(route('dashboard')); ?>">Accueil</a>
-        <a class="nav-link" href="<?php echo e(route('clients.index')); ?>">Gestion des Clients</a>
-        <a class="nav-link" href="<?php echo e(route('vendeurs.index')); ?>">Gestion des Vendeurs</a>
-        <a href="#">Nos produits</a>
-
-    </div>
-</div>
 <div class="dashboard">
     <div class="card">
         <h2>CHIFFRE AFFAIRE MOIS</h2>
@@ -43,10 +28,7 @@
         <h2>PRODUIT EN RECUL</h2>
         <?php echo $__env->make('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
     </div>
-
 </div>
-</div>
+<?php $__env->stopSection(); ?>
 
-</body>
-</html>
-<?php /**PATH C:\Users\benjamin.bidou\00---Cafthe---Dashboard\cafthe-dashboard\resources\views/dashboard.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\benjamin.bidou\00---Cafthe---Dashboard\cafthe-dashboard\resources\views/dashboard.blade.php ENDPATH**/ ?>

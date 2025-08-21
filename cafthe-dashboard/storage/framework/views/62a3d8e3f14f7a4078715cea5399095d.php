@@ -17,7 +17,7 @@
                         <a class="nav-link" href="<?php echo e(route('dashboard')); ?>">Accueil</a>
                         <a class="nav-link" href="<?php echo e(route('clients.index')); ?>">Gestion des Clients</a>
                         <a class="nav-link" href="<?php echo e(route('vendeurs.index')); ?>">Gestion des Vendeurs</a>
-                        <a href="#">Nos produits</a>
+                        <a class="nav-link" href="#">Nos produits</a>
                 <!-- Ajoutez d'autres liens ici -->
             </ul>
 

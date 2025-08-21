@@ -6,7 +6,8 @@ use App\Http\Controllers\VendeurController;
 use Illuminate\Support\Facades\Route;
 
 // Route d'accueil
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+//->middleware('auth')
 
 // Route pour les clients
 Route::resource('clients', ClientController::class);

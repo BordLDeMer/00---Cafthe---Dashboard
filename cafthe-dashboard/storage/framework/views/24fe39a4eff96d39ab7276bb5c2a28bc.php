@@ -1,32 +1,30 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4><i class="bi bi-person-gear me-2"></i>Modifier le Vendeur</h4>
-                        <a href="{{ route('vendeurs.index') }}" class="btn btn-outline-secondary btn-sm">
+                        <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn btn-outline-secondary btn-sm">
                             <i class="bi bi-arrow-left me-1"></i>Retour à la liste
                         </a>
                     </div>
                     <div class="card-body">
                         <!-- Affichage des erreurs -->
-                        @if ($errors->any())
+                        <?php if($errors->any()): ?>
                             <div class="alert alert-danger">
                                 <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
+                                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li><?php echo e($error); ?></li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                         <!-- Formulaire d'édition -->
-                        <form action="{{ route('vendeurs.update', $vendeur) }}" method="POST">
-                            @csrf
-                            @method('PUT')
+                        <form action="<?php echo e(route('vendeurs.update', $vendeur)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('PUT'); ?>
 
                             <!-- ID Vendeur (lecture seule) -->
                             <div class="mb-3">
@@ -36,7 +34,7 @@
                                 <input type="text"
                                        class="form-control-plaintext bg-light"
                                        id="ID_Vendeur"
-                                       value="{{ $vendeur->ID_Vendeur }}"
+                                       value="<?php echo e($vendeur->ID_Vendeur); ?>"
                                        readonly>
                                 <small class="form-text text-muted">L'ID du vendeur ne peut pas être modifié</small>
                             </div>
@@ -47,15 +45,29 @@
                                     <i class="bi bi-person me-1"></i>Nom et Prénom <span class="text-danger">*</span>
                                 </label>
                                 <input type="text"
-                                       class="form-control @error('nom_prenom') is-invalid @enderror"
+                                       class="form-control <?php $__errorArgs = ['nom_prenom'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                        id="nom_prenom"
                                        name="nom_prenom"
-                                       value="{{ old('nom_prenom', $vendeur->nom_prenom) }}"
+                                       value="<?php echo e(old('nom_prenom', $vendeur->nom_prenom)); ?>"
                                        required
                                        placeholder="Jean Dupont">
-                                @error('nom_prenom')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['nom_prenom'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Téléphone -->
@@ -64,15 +76,29 @@
                                     <i class="bi bi-telephone me-1"></i>Téléphone <span class="text-danger">*</span>
                                 </label>
                                 <input type="tel"
-                                       class="form-control @error('tel') is-invalid @enderror"
+                                       class="form-control <?php $__errorArgs = ['tel'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                        id="tel"
                                        name="tel"
-                                       value="{{ old('tel', $vendeur->tel) }}"
+                                       value="<?php echo e(old('tel', $vendeur->tel)); ?>"
                                        required
                                        placeholder="06 12 34 56 78">
-                                @error('tel')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['tel'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Email -->
@@ -81,15 +107,29 @@
                                     <i class="bi bi-envelope me-1"></i>Email <span class="text-danger">*</span>
                                 </label>
                                 <input type="email"
-                                       class="form-control @error('mail') is-invalid @enderror"
+                                       class="form-control <?php $__errorArgs = ['mail'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                        id="mail"
                                        name="mail"
-                                       value="{{ old('mail', $vendeur->mail) }}"
+                                       value="<?php echo e(old('mail', $vendeur->mail)); ?>"
                                        required
                                        placeholder="jean.dupont@exemple.com">
-                                @error('mail')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['mail'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Mot de passe -->
@@ -99,7 +139,14 @@
                                 </label>
                                 <div class="input-group">
                                     <input type="password"
-                                           class="form-control @error('mdp') is-invalid @enderror"
+                                           class="form-control <?php $__errorArgs = ['mdp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                                            id="mdp"
                                            name="mdp"
                                            placeholder="Laissez vide pour conserver le mot de passe actuel">
@@ -112,9 +159,16 @@
                                 <small class="form-text text-muted">
                                     Laissez ce champ vide si vous ne souhaitez pas modifier le mot de passe
                                 </small>
-                                @error('mdp')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
+                                <?php $__errorArgs = ['mdp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <div class="invalid-feedback d-block"><?php echo e($message); ?></div>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <!-- Confirmation mot de passe -->
@@ -142,12 +196,12 @@
                                     <button type="submit" class="btn btn-primary me-2">
                                         <i class="bi bi-check-lg me-1"></i>Mettre à jour
                                     </button>
-                                    <a href="{{ route('vendeurs.show', $vendeur) }}" class="btn btn-outline-info">
+                                    <a href="<?php echo e(route('vendeurs.show', $vendeur)); ?>" class="btn btn-outline-info">
                                         <i class="bi bi-eye me-1"></i>Voir
                                     </a>
                                 </div>
                                 <div>
-                                    <a href="{{ route('vendeurs.index') }}" class="btn btn-secondary">
+                                    <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn btn-secondary">
                                         <i class="bi bi-x-lg me-1"></i>Annuler
                                     </a>
                                 </div>
@@ -159,11 +213,13 @@
                         <div class="row text-muted small">
                             <div class="col-md-6">
                                 <i class="bi bi-calendar-plus me-1"></i>
-                                Créé le: {{ $vendeur->created_at?->format('d/m/Y H:i') }}
+                                Créé le: <?php echo e($vendeur->created_at?->format('d/m/Y H:i')); ?>
+
                             </div>
                             <div class="col-md-6 text-end">
                                 <i class="bi bi-calendar-check me-1"></i>
-                                Modifié le: {{ $vendeur->updated_at?->format('d/m/Y H:i') }}
+                                Modifié le: <?php echo e($vendeur->updated_at?->format('d/m/Y H:i')); ?>
+
                             </div>
                         </div>
                     </div>
@@ -171,9 +227,9 @@
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
         // Fonction pour afficher/masquer les mots de passe
         function togglePassword(fieldId) {
@@ -229,4 +285,6 @@
             }
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\benjamin.bidou\00---Cafthe---Dashboard\cafthe-dashboard\resources\views/vendeurs/edit.blade.php ENDPATH**/ ?>
