@@ -2,7 +2,8 @@
     <div class="container-fluid py-4" style="background-color: linen;">
         <div class="row justify-content-center">
             <div class="col-md-10 mx-auto">
-                <div class="card shadow" style="background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden; width: 100%;">
+                <div class="card shadow"
+                     style="background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden; width: 100%; min-height: 1000px;">
                     <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #5a3e2b; color: white; border: none; border-radius: 10px 10px 0 0 !important;">
                         <h4 class="mb-0"><i class="bi bi-person-gear me-2"></i>Modifier le Vendeur</h4>
                         <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn" style="background-color: rgba(255, 255, 255, 0.2); color: white; border-radius: 5px; padding: 5px 10px; text-decoration: none;">
