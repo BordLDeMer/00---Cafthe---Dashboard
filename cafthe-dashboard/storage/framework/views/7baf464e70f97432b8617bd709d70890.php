@@ -1,14 +1,89 @@
 <?php $__env->startSection('content'); ?>
-    <h1>Détails du vendeur</h1>
-    <div class="card">
-        <div class="card-body">
-            <p><strong>ID:</strong> <?php echo e($vendeur->ID_Vendeur); ?></p>
-            <p><strong>Nom et Prénom:</strong> <?php echo e($vendeur->nom_prenom); ?></p>
-            <p><strong>Téléphone:</strong> <?php echo e($vendeur->tel); ?></p>
-            <p><strong>Email:</strong> <?php echo e($vendeur->mail); ?></p>
+    <div class="container-fluid py-4" style="background-color: linen;">
+        <div class="row justify-content-center">
+            <div class="col-md-10 mx-auto">
+                <div class="card shadow" style="background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden; width: 100%;">
+                    <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #5a3e2b; color: white; border: none; border-radius: 10px 10px 0 0 !important;">
+                        <h4 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Détails du Vendeur</h4>
+                        <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn" style="background-color: rgba(255, 255, 255, 0.2); color: white; border-radius: 5px; padding: 5px 10px; text-decoration: none;">
+                            <i class="bi bi-arrow-left me-1"></i>Retour à la liste
+                        </a>
+                    </div>
+                    <div class="card-body" style="background-color: white; color: #5a3e2b; padding: 20px;">
+                        <!-- Utilisation de d-flex et align-items-center pour chaque ligne -->
+                        <div class="row mb-3">
+                            <div class="col-md-4" style="white-space: nowrap;">
+                                <strong><i class="bi bi-hash me-2"></i>ID Vendeur:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <?php echo e($vendeur->ID_Vendeur); ?>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4" style="white-space: nowrap;">
+                                <strong><i class="bi bi-person me-2"></i>Nom et Prénom:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <?php echo e($vendeur->nom_prenom); ?>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4" style="white-space: nowrap;">
+                                <strong><i class="bi bi-telephone me-2"></i>Téléphone:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <?php echo e($vendeur->tel); ?>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4" style="white-space: nowrap;">
+                                <strong><i class="bi bi-envelope me-2"></i>Email:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <?php echo e($vendeur->mail); ?>
+
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <div>
+                                <a href="<?php echo e(route('vendeurs.edit', $vendeur)); ?>" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 8px 15px; text-decoration: none; margin-right: 10px;">
+                                    <i class="bi bi-pencil-square me-1"></i>Modifier
+                                </a>
+                            </div>
+                            <div>
+                                <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn" style="background-color: #6c757d; color: white; border-radius: 5px; padding: 8px 15px; text-decoration: none;">
+                                    <i class="bi bi-x-lg me-1"></i>Retour
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Informations supplémentaires -->
+                        <hr class="mt-4" style="border-top: 1px solid #e9ecef;">
+                        <div class="row text-muted small mt-3">
+                            <div class="col-md-6">
+                                <i class="bi bi-calendar-plus me-1"></i>
+                                Créé le: <?php echo e($vendeur->created_at?->format('d/m/Y H:i')); ?>
+
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <i class="bi bi-calendar-check me-1"></i>
+                                Modifié le: <?php echo e($vendeur->updated_at?->format('d/m/Y H:i')); ?>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <a href="<?php echo e(route('vendeurs.index')); ?>" class="btn btn-secondary mt-3">Retour</a>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\benjamin.bidou\00---Cafthe---Dashboard\cafthe-dashboard\resources\views/vendeurs/show.blade.php ENDPATH**/ ?>
