@@ -44,7 +44,7 @@
                 <div class="card h-100" style="background-color: #ccbba7; border: none; border-radius: 10px;">
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: #5a3e2b;">PRODUIT EN RECUL</h5>
-                        @include('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'])
+                        @include('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'produits en recul'])
                     </div>
                 </div>
             </div>

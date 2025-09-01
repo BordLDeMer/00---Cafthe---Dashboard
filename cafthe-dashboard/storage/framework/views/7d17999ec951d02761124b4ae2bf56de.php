@@ -42,7 +42,7 @@
                 <div class="card h-100" style="background-color: #ccbba7; border: none; border-radius: 10px;">
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: #5a3e2b;">PRODUIT EN RECUL</h5>
-                        <?php echo $__env->make('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'Produit en recul'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                        <?php echo $__env->make('product-card', ['produit' => $mauvaiseVente ?? null, 'titre' => 'produits en recul'], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                     </div>
                 </div>
             </div>

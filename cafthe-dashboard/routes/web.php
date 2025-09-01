@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendeurController;
+use App\Http\Controllers\PanierController;
 use Illuminate\Support\Facades\Route;
 
 // Route d'accueil
@@ -22,3 +23,8 @@ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLog
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
+// Routes pour le panier
+Route::get('/produits', [PanierController::class, 'index'])->name('produits.index');
+Route::post('/panier/ajouter/{id}', [PanierController::class, 'ajouterAuPanier'])->name('panier.ajouter');
+Route::get('/panier', [PanierController::class, 'voirPanier'])->name('panier.voir');
+Route::delete('/panier/supprimer/{id}', [PanierController::class, 'supprimerDuPanier'])->name('panier.supprimer');

@@ -33,7 +33,6 @@ class Produit extends Model
         ];
     }
 
-
     /**
      * Calcule le chiffre d'affaires du mois en cours à partir des ventes.
      */
@@ -65,5 +64,13 @@ class Produit extends Model
     public static function MauvaiseVente()
     {
         return self::orderBy('ventes', 'asc')->first(); // Utilise 'ventes' et non 'vente'
+    }
+
+    /**
+     * Récupère les types de produits uniques pour les filtres.
+     */
+    public static function getTypesProduits()
+    {
+        return self::select('type_produit')->distinct()->pluck('type_produit');
     }
 }
