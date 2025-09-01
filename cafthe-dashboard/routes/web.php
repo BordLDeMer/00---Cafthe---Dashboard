@@ -5,20 +5,25 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendeurController;
 use Illuminate\Support\Facades\Route;
 
-// Route d'accueil
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
-//->middleware('auth')
+Route::middleware(['web'])->group(function () {
+    // Route d'accueil (protégée)
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboard')
+        ->middleware('auth:vendeur');
 
-// Route pour les clients
-Route::resource('clients', ClientController::class);
+    // Route pour la page home (protégée)
+    Route::get('/home', [DashboardController::class, 'home'])
+        ->name('home')
+        ->middleware('auth:vendeur');
 
-// Route pour les vendeurs
-Route::resource('vendeurs', VendeurController::class);
+    // Routes pour les clients (protégées)
+    Route::resource('clients', ClientController::class)->middleware('auth:vendeur');
 
-// Routes pour les authentifications
-Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    // Routes pour les vendeurs (protégées)
+    Route::resource('vendeurs', VendeurController::class)->middleware('auth:vendeur');
 
-
-Auth::routes();
+    // Routes pour l'authentification des vendeurs
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+});

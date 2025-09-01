@@ -16,4 +16,9 @@ class DashBoardController extends BaseController
 
         return view('dashboard', compact('balanceMensuelle', 'chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
     }
+    public function home()
+    {
+        return view('home');
+    }
+
 }

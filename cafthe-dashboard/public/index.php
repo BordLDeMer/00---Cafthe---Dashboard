@@ -1,22 +1,33 @@
 <?php
 
-ini_set('memory_limit', '2G'); // Augmente à 2 Go
+// Désactiver le middleware ValidatePathEncoding
+if (!defined('LARAVEL_START')) {
+    $middlewareFile = __DIR__.'/../vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePathEncoding.php';
 
-use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+    if (file_exists($middlewareFile)) {
+        $content = file_get_contents($middlewareFile);
 
-define('LARAVEL_START', microtime(true));
+        // Vérifiez si le fichier a déjà été modifié pour éviter les doublons
+        if (strpos($content, 'public function handle($request, Closure $next) { return $next($request); }') === false) {
+            $content = str_replace(
+                'public function handle($request, Closure $next)',
+                'public function handle($request, Closure $next) { return $next($request); } //',
+                $content
+            );
 
-// Determine if the application is in maintenance mode...
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
+            file_put_contents($middlewareFile, $content);
+        }
+    }
 }
 
-// Register the Composer autoloader...
 require __DIR__.'/../vendor/autoload.php';
 
-// Bootstrap Laravel and handle the request...
-/** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = \Illuminate\Http\Request::capture()
+)->send();
+
+$kernel->terminate($request, $response);

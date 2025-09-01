@@ -26,4 +26,9 @@ class ForgotPasswordController extends Controller
     {
         return $request->only('mail');
     }
+    protected function guard()
+    {
+        return Auth::guard('vendeur');
+    }
+
 }

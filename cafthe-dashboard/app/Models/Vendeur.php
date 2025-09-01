@@ -12,6 +12,8 @@ class Vendeur extends Authenticatable
 
     protected $table = 'vendeur';
     protected $primaryKey = 'ID_Vendeur';
+    public $incrementing = true;
+    protected $keyType = 'int';
     public $timestamps = false;
 
     protected $fillable = [
@@ -34,10 +36,5 @@ class Vendeur extends Authenticatable
     public function getAuthPassword()
     {
         return $this->mdp;
-    }
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['mdp'] = bcrypt($value);
     }
 }
