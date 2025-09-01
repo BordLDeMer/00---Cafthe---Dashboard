@@ -21,6 +21,9 @@
                 <li class="nav-item">
                     <a class="nav-link fs-5 ps-4 text-white" href="{{ route('produits.index') }}">Nos Produits</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link fs-5 ps-4 text-white" href="https://reactjs-cafthe.benjamin.bidou.dev-campus.fr/">Notre site</a>
+                </li>
             </ul>
             <!-- Éléments à droite (panier, utilisateur, déconnexion, etc.) -->
             <ul class="navbar-nav d-flex align-items-center">
