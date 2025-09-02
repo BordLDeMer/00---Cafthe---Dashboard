@@ -36,8 +36,10 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
     // Routes pour les produits
     Route::prefix('produits')->group(function () {
         Route::get('/', [ProduitController::class, 'index'])->name('produits.index');
-        Route::get('/{id}', [ProduitController::class, 'show'])->name('produits.show');
+        Route::get('/create', [ProduitController::class, 'create'])->name('produits.create');
+        Route::post('/', [ProduitController::class, 'store'])->name('produits.store');
         Route::get('/search', [ProduitController::class, 'search'])->name('produits.search');
+        Route::get('/{id}', [ProduitController::class, 'show'])->name('produits.show');
     });
 
     // Routes pour le panier

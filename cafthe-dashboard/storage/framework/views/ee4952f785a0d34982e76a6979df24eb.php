@@ -5,10 +5,16 @@
                 <h1 style="color: #5a3e2b; font-weight: bold;">Liste des produits</h1>
             </div>
         -->
-            <!-- Barre de filtrage -->
+            <!-- Barre de filtrage + bouton Ajouter -->
             <div class="col-12 mb-4">
+                <a href="<?php echo e(route('produits.create')); ?>" class="btn" style="background-color:darkred; color:white; border-radius:5px; padding:8px 20px; text-decoration:none;">
+                    Ajouter un produit
+                </a>
                 <div class="card" style="background-color: #82C46C; border: none; border-radius: 10px; width:100%; height: auto;">
                     <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0" style="color:#5a3e2b;">Filtrer</h5>
+                        </div>
                         <form method="GET" action="<?php echo e(route('produits.index')); ?>">
                             <div class="row g-3">
                                 <div class="col-md-3">
