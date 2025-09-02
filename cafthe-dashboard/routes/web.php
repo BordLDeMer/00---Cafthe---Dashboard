@@ -7,28 +7,47 @@ use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
 use Illuminate\Support\Facades\Route;
 
+// =============================================
+// Routes publiques (accessibles sans authentification)
+// =============================================
+
 // Route d'accueil
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); //->middleware('auth:vendeur')
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
 // Route pour la page home
-Route::get('/home', [DashboardController::class, 'home'])->name('home'); //->middleware('auth:vendeur')
-// Routes pour les clients
-Route::resource('clients', ClientController::class); //->middleware('auth:vendeur')
-// Routes pour les vendeurs
-Route::resource('vendeurs', VendeurController::class); //->middleware('auth:vendeur')
+Route::get('/home', [DashboardController::class, 'home'])->name('home');
+
 // Routes pour l'authentification des vendeurs
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-// Routes pour les produits
-Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
-Route::get('/produits/{id}', [ProduitController::class, 'show'])->name('produits.show');
-Route::get('/produits/search', [ProduitController::class, 'search'])->name('produits.search');
+// =============================================
+// Routes protégées (nécessitent une authentification)
+// =============================================
+// Route::middleware(['auth:vendeur'])->group(function () {
 
-// Routes pour le panier
-Route::post('/panier/ajouter/{id}', [PanierController::class, 'ajouterProduit'])->name('panier.ajouter');
-Route::get('/panier', [PanierController::class, 'voirPanier'])->name('panier.voir');
-Route::post('/panier/supprimer/{id}', [PanierController::class, 'supprimerProduit'])->name('panier.supprimer');
-Route::post('/panier/valider', [PanierController::class, 'validerAchat'])->name('panier.valider');
-Route::post('/panier/mettre-a-jour/{id}', [PanierController::class, 'mettreAJour'])->name('panier.mettre_a_jour');
-Route::post('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
+    // Routes pour les clients
+    Route::resource('clients', ClientController::class);
+
+    // Routes pour les vendeurs
+    Route::resource('vendeurs', VendeurController::class);
+
+    // Routes pour les produits
+    Route::prefix('produits')->group(function () {
+        Route::get('/', [ProduitController::class, 'index'])->name('produits.index');
+        Route::get('/{id}', [ProduitController::class, 'show'])->name('produits.show');
+        Route::get('/search', [ProduitController::class, 'search'])->name('produits.search');
+    });
+
+    // Routes pour le panier
+    Route::prefix('panier')->group(function () {
+        Route::post('/ajouter/{id}', [PanierController::class, 'ajouterProduit'])->name('panier.ajouter');
+        Route::get('/', [PanierController::class, 'voirPanier'])->name('panier.voir');
+        Route::post('/supprimer/{id}', [PanierController::class, 'supprimerProduit'])->name('panier.supprimer');
+        Route::post('/mettre-a-jour/{id}', [PanierController::class, 'mettreAJour'])->name('panier.mettre_a_jour');
+        Route::post('/valider', [PanierController::class, 'validerAchat'])->name('panier.valider');
+        Route::post('/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
+    });
+
+// });
