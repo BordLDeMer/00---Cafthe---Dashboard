@@ -79,6 +79,7 @@
                                         <?php if($produit->stock > 0): ?>
                                             <form action="<?php echo e(route('panier.ajouter', $produit->ID_produit)); ?>" method="POST">
                                                 <?php echo csrf_field(); ?>
+                                                <input type="hidden" name="quantite" value="1">
                                                 <button type="submit" class="btn w-100" style="background-color: #28a745; color: white; border-radius: 5px; padding: 8px; border: none; font-weight: bold;">
                                                     Ajouter au panier
                                                 </button>

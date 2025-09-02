@@ -33,15 +33,16 @@ class PanierController extends Controller
                 if ($produit) {
                     $panier[$id] = [
                         'designation_produit' => $produit->designation_produit,
-                        'prix_ttc' => $produit->prix_produit, // ou $produit->prix_ttc si disponible
+                        'prix_ttc' => $produit->prix_ttc, // corrigé: utiliser le bon champ prix_ttc
                         'quantite' => $details['quantite'] ?? 1,
                         'image' => $produit->image_produit,
                     ];
                 }
             }
-            // Calculer le total
-            if (isset($details['prix_ttc']) && isset($details['quantite'])) {
-                $total += $details['prix_ttc'] * $details['quantite'];
+            // Calculer le total sur la valeur éventuellement corrigée
+            $item = $panier[$id] ?? $details;
+            if (isset($item['prix_ttc']) && isset($item['quantite'])) {
+                $total += $item['prix_ttc'] * $item['quantite'];
             }
         }
 
@@ -55,38 +56,43 @@ class PanierController extends Controller
      */
     public function ajouterProduit(Request $request, $id)
     {
+        // 1. Valider la requête
         $request->validate([
             'quantite' => 'required|integer|min:1',
         ]);
 
+        // 2. Récupérer le produit
         $produit = Produit::findOrFail($id);
+
+        // 3. Récupérer le panier depuis la session
         $panier = Session::get('panier', []);
+
+        // 4. Vérifier le stock
         $quantite = $request->input('quantite', 1);
-
-        // Vérifier le stock disponible
-        $quantiteExistante = isset($panier[$id]) ? $panier[$id]['quantite'] : 0;
-        $nouvelleQuantite = $quantiteExistante + $quantite;
-
-        if ($nouvelleQuantite > $produit->stock) {
+        $quantiteExistante = $panier[$id]['quantite'] ?? 0;
+        if ($quantiteExistante + $quantite > $produit->stock) {
             return redirect()->back()->with('error', 'Stock insuffisant pour ce produit.');
         }
 
+        // 5. Ajouter ou mettre à jour le produit dans le panier
         if (isset($panier[$id])) {
             $panier[$id]['quantite'] += $quantite;
         } else {
             $panier[$id] = [
                 'designation_produit' => $produit->designation_produit,
-                'prix_ttc' => $produit->prix_produit,
+                'prix_ttc' => $produit->prix_ttc,
                 'quantite' => $quantite,
                 'image' => $produit->image_produit,
             ];
         }
 
+        // 6. Sauvegarder le panier dans la session
         Session::put('panier', $panier);
-        Log::info("Produit {$id} ajouté au panier. Quantité totale: " . ($panier[$id]['quantite']));
 
+        // 7. Rediriger avec un message de succès
         return redirect()->back()->with('success', 'Produit ajouté au panier avec succès !');
     }
+
 
     /**
      * Met à jour la quantité d'un produit dans le panier.
@@ -154,7 +160,7 @@ class PanierController extends Controller
             if ($produit) {
                 $panierNettoye[$id] = [
                     'designation_produit' => $produit->designation_produit,
-                    'prix_ttc' => $produit->prix_produit,
+                    'prix_ttc' => $produit->prix_ttc,
                     'quantite' => $details['quantite'] ?? 1,
                     'image' => $produit->image_produit,
                 ];

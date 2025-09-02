@@ -57,12 +57,12 @@
                                             <td style="padding: 12px; text-align: center;">
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     @if(isset($details['image']))
-                                                        <img src="{{ asset('storage/' . $details['image']) }}" alt="{{ $details['designation'] }}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+                                                        <img src="{{ asset('storage/' . $details['image']) }}" alt="{{ $details['designation_produit'] ?? 'Produit' }}" style="width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
                                                     @endif
-                                                    {{ $details['designation'] ?? 'Produit inconnu' }}
+                                                    {{ $details['designation_produit'] ?? 'Produit inconnu' }}
                                                 </div>
                                             </td>
-                                            <td style="padding: 12px; text-align: center;">{{ number_format($details['prix'] ?? 0, 2) }} €</td>
+                                            <td style="padding: 12px; text-align: center;">{{ number_format($details['prix_ttc'] ?? 0, 2) }} €</td>
                                             <td style="padding: 12px; text-align: center;">
                                                 <form action="{{ route('panier.mettre_a_jour', $id) }}" method="POST" class="d-flex justify-content-center align-items-center">
                                                     @csrf
@@ -72,7 +72,7 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td style="padding: 12px; text-align: center;">{{ number_format(($details['prix'] ?? 0) * ($details['quantite'] ?? 1), 2) }} €</td>
+                                            <td style="padding: 12px; text-align: center;">{{ number_format(($details['prix_ttc'] ?? 0) * ($details['quantite'] ?? 1), 2) }} €</td>
                                             <td style="padding: 12px; text-align: center;">
                                                 <form action="{{ route('panier.supprimer', $id) }}" method="POST" style="display:inline;">
                                                     @csrf
