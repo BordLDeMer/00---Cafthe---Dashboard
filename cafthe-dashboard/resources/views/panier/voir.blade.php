@@ -38,7 +38,7 @@
             <!-- Liste des produits dans le panier -->
             <div class="col-12">
                 @if(!empty($panier))
-                    <div class="card" style="background-color: white; border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div class="card" style="background-color: white; border: none; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width:100%;">
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0" style="background-color: white; width: 100%;">
@@ -64,7 +64,7 @@
                                             </td>
                                             <td style="padding: 12px; text-align: center;">{{ number_format($details['prix'] ?? 0, 2) }} €</td>
                                             <td style="padding: 12px; text-align: center;">
-                                                <form action="{{ route('panier.mettreAJour', $id) }}" method="POST" class="d-flex justify-content-center align-items-center">
+                                                <form action="{{ route('panier.mettre_a_jour', $id) }}" method="POST" class="d-flex justify-content-center align-items-center">
                                                     @csrf
                                                     <input type="number" name="quantite" value="{{ $details['quantite'] ?? 1 }}" min="1" style="width: 60px; text-align: center; border-radius: 5px; border: 1px solid #5a3e2b; padding: 5px;">
                                                     <button type="submit" class="btn ms-2" style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px; padding: 5px 10px; border: none;">
@@ -74,7 +74,7 @@
                                             </td>
                                             <td style="padding: 12px; text-align: center;">{{ number_format(($details['prix'] ?? 0) * ($details['quantite'] ?? 1), 2) }} €</td>
                                             <td style="padding: 12px; text-align: center;">
-                                                <form action="{{ route('panier.supprimerProduit', $id) }}" method="POST" style="display:inline;">
+                                                <form action="{{ route('panier.supprimer', $id) }}" method="POST" style="display:inline;">
                                                     @csrf
                                                     <button type="submit" class="btn" style="background-color: #dc3545; color: white; border-radius: 5px; padding: 5px 10px; border: none;" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit du panier ?')">
                                                         <i class="bi bi-trash"></i> Supprimer
@@ -89,7 +89,7 @@
                                         <td colspan="3" style="padding: 12px; text-align: right; font-weight: bold;">Total:</td>
                                         <td style="padding: 12px; text-align: center; font-weight: bold;">{{ number_format($total, 2) }} €</td>
                                         <td style="padding: 12px; text-align: center;">
-                                            <form action="{{ route('panier.validerAchat') }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('panier.valider') }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 <button type="submit" class="btn" style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px; padding: 8px 15px; border: none; font-weight: bold;" onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')">
                                                     <i class="bi bi-check-lg"></i> Valider l'achat
