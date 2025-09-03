@@ -48,6 +48,9 @@
                                             <a href="{{ route('clients.edit', $client->ID_client) }}" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 5px 10px; text-decoration: none; margin-right: 5px;">
                                                 Modifier
                                             </a>
+                                            <a href="{{ route('commandes.client', $client->ID_client) }}" class="btn btn-primary" style="border-radius: 5px; padding: 5px 10px; text-decoration: none; margin-right: 5px; background-color: #82c46c; color: white;">
+                                                Commandes
+                                            </a>
                                             <form action="{{ route('clients.destroy', $client->ID_client) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -68,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Pagination (sans les grosses flèches) -->
+            <!-- Pagination -->
             <div class="col-12 mt-4 d-flex justify-content-center">
                 {{ $clients->links('vendor.pagination.bootstrap-4') }}
             </div>

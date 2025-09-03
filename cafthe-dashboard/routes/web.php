@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendeurController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\CommandeController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -44,7 +45,6 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
         Route::put('/{produit}', [ProduitController::class, 'update'])->name('produits.update');
 });
 
-
     // Routes pour le panier
     Route::prefix('panier')->group(function () {
         Route::post('/ajouter/{id}', [PanierController::class, 'ajouterProduit'])->name('panier.ajouter');
@@ -54,5 +54,9 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
         Route::post('/valider', [PanierController::class, 'validerAchat'])->name('panier.valider');
         Route::post('/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
     });
+
+    // Routes pour afficher les commandes client
+        Route::get('/commandes/client/{id_client}', [CommandeController::class, 'commandesParClient'])->name('commandes.client');
+        Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
 
 // });
