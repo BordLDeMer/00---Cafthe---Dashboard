@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
@@ -14,11 +13,16 @@ class DashBoardController extends BaseController
         $meilleureVente = Produit::MeilleureVente();
         $mauvaiseVente = Produit::MauvaiseVente();
 
-        return view('dashboard', compact('balanceMensuelle', 'chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente'));
+        // Récupération des produits dont le stock est inférieur à 5, triés par ordre croissant de stock
+        $produitsFaibleStock = Produit::where('stock', '<', 5)
+            ->orderBy('stock', 'asc')
+            ->get();
+
+        return view('dashboard', compact('balanceMensuelle', 'chiffreAffairesMois', 'meilleureVente', 'mauvaiseVente', 'produitsFaibleStock'));
     }
+
     public function home()
     {
         return view('home');
     }
-
 }

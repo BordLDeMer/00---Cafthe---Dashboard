@@ -56,7 +56,9 @@
                         </div>
 
                         <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="solde" name="solde" <?php echo e(old('solde') ? 'checked' : ''); ?>>
+                            <!-- Ensure a value is always submitted: 0 when unchecked, 1 when checked -->
+                            <input type="hidden" name="solde" value="0">
+                            <input class="form-check-input" type="checkbox" id="solde" name="solde" value="1" <?php echo e(old('solde') ? 'checked' : ''); ?>>
                             <label class="form-check-label" for="solde">En solde</label>
                         </div>
 
