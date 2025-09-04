@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Client;
@@ -8,9 +9,20 @@ use App\Http\Controllers\BaseController;
 
 class ClientController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::paginate(10); // Charge 10 clients par page
+        $query = Client::query();
+
+        // Filtre par recherche
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('ID_client', 'like', "%{$search}%")
+                    ->orWhere('nom_prenom', 'like', "%{$search}%");
+            });
+        }
+
+        $clients = $query->paginate(10);
         return view('clients.index', compact('clients'));
     }
 
@@ -68,7 +80,6 @@ class ClientController extends BaseController
         }
 
         $client->update($data);
-
         return redirect()->route('clients.index')->with('success', 'Client mis à jour avec succès.');
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produit;
+use App\Models\Commande;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -188,42 +189,67 @@ class PanierController extends Controller
      */
     public function validerAchat(Request $request)
     {
+        // Vérifie que le panier n'est pas vide
         $panier = Session::get('panier', []);
-
         if (empty($panier)) {
             return redirect()->route('panier.voir')->with('error', 'Votre panier est vide.');
         }
 
+        // Valider l'ID_client
+        $request->validate([
+            'ID_client' => 'required|exists:client,ID_client',
+        ]);
+
         DB::beginTransaction();
 
         try {
+            // Calculer le montant total
+            $montantCommande = 0;
+            foreach ($panier as $id => $details) {
+                $montantCommande += $details['prix_ttc'] * $details['quantite'];
+            }
+
+            // Créer la commande
+            $commande = Commande::create([
+                'ID_client' => $request->ID_client,
+                'montant_commande' => $montantCommande, // Modifie cette ligne
+                'statut' => 'en_cours',
+            ]);
+
+            // Mettre à jour les stocks et enregistrer les produits de la commande
             foreach ($panier as $id => $details) {
                 $produit = Produit::findOrFail($id);
-
                 if ($produit->stock < $details['quantite']) {
                     throw new \Exception("Stock insuffisant pour {$produit->designation_produit}.");
                 }
 
+                // Mettre à jour le stock du produit
                 $produit->stock -= $details['quantite'];
                 $produit->ventes += $details['quantite'];
                 $produit->date_vente = now();
-
                 if (!$produit->save()) {
                     throw new \Exception("Erreur lors de la mise à jour du produit {$produit->designation_produit}.");
                 }
 
+                // Enregistrer les produits de la commande dans la table pivot
+                $commande->produits()->attach($id, [
+                    'quantite' => $details['quantite'],
+                    'prix_unitaire' => $details['prix_ttc'],
+                ]);
+
                 Log::info("Produit {$produit->designation_produit} mis à jour. Nouveau stock: {$produit->stock}");
             }
 
+            // Vider le panier
             Session::forget('panier');
             DB::commit();
 
             return redirect()->route('panier.voir')->with('success', 'Votre achat a été validé avec succès !');
-
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("Erreur lors de la validation de l'achat: " . $e->getMessage());
             return redirect()->route('panier.voir')->with('error', $e->getMessage());
         }
     }
+
 }

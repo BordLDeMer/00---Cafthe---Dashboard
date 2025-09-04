@@ -13,6 +13,30 @@
                     </div>
                 </div>
             <?php endif; ?>
+
+            <!-- Barre de recherche -->
+            <div class="col-12 mb-4">
+                <form action="<?php echo e(route('clients.index')); ?>" method="GET" class="d-flex justify-content-center">
+                    <div class="input-group" style="max-width: 500px; width: 100%;">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            placeholder="Rechercher par ID ou Nom/Prénom..."
+                            value="<?php echo e(request('search')); ?>"
+                            style="border-radius: 10px 0 0 10px; border-right: none; background-color: white; padding: 10px 15px;"
+                        >
+                        <button
+                            type="submit"
+                            class="btn"
+                            style="background-color: #5a3e2b; color: white; border-radius: 0 10px 10px 0; padding: 10px 20px; border: none;"
+                        >
+                            <i class="fas fa-search"></i> Rechercher
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Bouton Ajouter un client -->
             <div class="col-12 mb-4 text-end">
                 <a href="<?php echo e(route('clients.create')); ?>" class="btn" style="background-color: #5a3e2b; color: white; border-radius: 10px; padding: 8px 20px; text-decoration: none;">

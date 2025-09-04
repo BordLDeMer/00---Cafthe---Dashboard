@@ -22,6 +22,27 @@
                 </a>
             </div>
 
+            <!-- ID client -->
+            <form action="{{ route('panier.valider') }}" method="POST" style="display:inline;">
+                @csrf
+                <!-- Champ pour saisir manuellement l'ID_client -->
+                <div class="input-group mb-3" style="max-width: 300px; margin-right: 10px;">
+                    <input
+                        type="text"
+                        name="ID_client"
+                        class="form-control"
+                        placeholder="ID du client"
+                        value="{{ auth()->check() ? auth()->user()->ID_client : '' }}"
+                        style="border-radius: 5px 0 0 5px; border-right: none; background-color: white; padding: 8px 12px;"
+                        required
+                    >
+                    <button type="submit" class="btn" style="background-color: #82C46C; color: #5a3e2b; border-radius: 0 5px 5px 0; padding: 8px 15px; border: none; font-weight: bold;" onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')">
+                        <i class="bi bi-check-lg"></i> Valider l'achat
+                    </button>
+                </div>
+            </form>
+
+
             <!-- Tableau des produits dans le panier -->
             <div class="col-12 d-flex justify-content-center">
                 <div class="card w-100" style="max-width: 1200px; background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden; height: auto;">

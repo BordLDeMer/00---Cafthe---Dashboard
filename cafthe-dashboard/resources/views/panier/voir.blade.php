@@ -14,6 +14,7 @@
                     </div>
                 </div>
             @endif
+
             @if(session('error'))
                 <div class="col-12 mb-4">
                     <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: none; border-radius: 10px;">
@@ -22,7 +23,7 @@
                 </div>
             @endif
 
-            <!-- Boutons d'action -->
+            <!-- Boutons Continuer achat + vider panier -->
             <div class="col-12 mb-4 d-flex justify-content-between">
                 <a href="{{ route('produits.index') }}" class="btn" style="background-color: #5a3e2b; color: white; border-radius: 10px; padding: 8px 20px; text-decoration: none;">
                     Continuer les achats
@@ -89,12 +90,34 @@
                                         <td colspan="3" style="padding: 12px; text-align: right; font-weight: bold;">Total:</td>
                                         <td style="padding: 12px; text-align: center; font-weight: bold;">{{ number_format($total, 2) }} €</td>
                                         <td style="padding: 12px; text-align: center;">
-                                            <form action="{{ route('panier.valider') }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                <button type="submit" class="btn" style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px; padding: 8px 15px; border: none; font-weight: bold;" onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')">
-                                                    <i class="bi bi-check-lg"></i> Valider l'achat
-                                                </button>
-                                            </form>
+                                            @if(auth()->check())
+                                                <form action="{{ route('panier.valider') }}" method="POST" class="d-flex flex-column align-items-center">
+                                                    @csrf
+                                                    <div class="input-group mb-2" style="width: 100%; max-width: 250px;">
+                                                        <input
+                                                            type="text"
+                                                            name="ID_client"
+                                                            class="form-control"
+                                                            placeholder="ID du client"
+                                                            value="{{ auth()->user()->ID_client }}"
+                                                            style="border-radius: 5px 0 0 5px; border-right: none; background-color: white; padding: 8px 12px;"
+                                                            required
+                                                        >
+                                                        <button
+                                                            type="submit"
+                                                            class="btn"
+                                                            style="background-color: #82C46C; color: #5a3e2b; border-radius: 0 5px 5px 0; padding: 8px 15px; border: none; font-weight: bold;"
+                                                            onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')"
+                                                        >
+                                                            <i class="bi bi-check-lg"></i> Valider
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('login') }}" class="btn" style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px; padding: 8px 15px; border: none; font-weight: bold;">
+                                                    <i class="bi bi-lock"></i> Connectez-vous pour valider
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                     </tfoot>
@@ -117,6 +140,7 @@
             </div>
         </div>
     </div>
+
     <style>
         .btn:hover:not(:disabled) {
             opacity: 0.9;
