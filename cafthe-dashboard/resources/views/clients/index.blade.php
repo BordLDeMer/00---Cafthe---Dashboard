@@ -33,16 +33,14 @@
                         >
                             <i class="fas fa-search"></i> Rechercher
                         </button>
+                        <a href="{{ route('clients.create') }}" class="btn" style="background-color: #82c46c; color: white; border-radius: 10px; padding: 8px 20px; margin-left: 10px; text-decoration: none;">
+                            Ajouter un client
+                        </a>
                     </div>
                 </form>
+
             </div>
 
-            <!-- Bouton Ajouter un client -->
-            <div class="col-12 mb-4 text-end">
-                <a href="{{ route('clients.create') }}" class="btn" style="background-color: #5a3e2b; color: white; border-radius: 10px; padding: 8px 20px; text-decoration: none;">
-                    Ajouter un client
-                </a>
-            </div>
             <!-- Tableau des clients -->
             <div class="col-12 d-flex justify-content-center">
                 <div class="card w-100" style="max-width: 1200px; background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden;">
