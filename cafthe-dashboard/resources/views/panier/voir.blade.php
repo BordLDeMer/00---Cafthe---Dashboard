@@ -5,7 +5,6 @@
             <div class="col-12 text-center mb-4">
                 <h1 style="color: #5a3e2b; font-weight: bold;">Mon Panier</h1>
             </div>
-
             <!-- Messages d'alerte -->
             @if(session('success'))
                 <div class="col-12 mb-4">
@@ -14,7 +13,6 @@
                     </div>
                 </div>
             @endif
-
             @if(session('error'))
                 <div class="col-12 mb-4">
                     <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: none; border-radius: 10px;">
@@ -22,7 +20,6 @@
                     </div>
                 </div>
             @endif
-
             <!-- Boutons Continuer achat + vider panier -->
             <div class="col-12 mb-4 d-flex justify-content-between">
                 <a href="{{ route('produits.index') }}" class="btn" style="background-color: #5a3e2b; color: white; border-radius: 10px; padding: 8px 20px; text-decoration: none;">
@@ -35,7 +32,6 @@
                     </button>
                 </form>
             </div>
-
             <!-- Liste des produits dans le panier -->
             <div class="col-12">
                 @if(!empty($panier))
@@ -90,34 +86,46 @@
                                         <td colspan="3" style="padding: 12px; text-align: right; font-weight: bold;">Total:</td>
                                         <td style="padding: 12px; text-align: center; font-weight: bold;">{{ number_format($total, 2) }} €</td>
                                         <td style="padding: 12px; text-align: center;">
-                                            @if(auth()->check())
-                                                <form action="{{ route('panier.valider') }}" method="POST" class="d-flex flex-column align-items-center">
-                                                    @csrf
-                                                    <div class="input-group mb-2" style="width: 100%; max-width: 250px;">
+                                            <form action="{{ route('panier.valider') }}" method="POST" class="d-flex flex-column align-items-center">
+                                                @csrf
+                                                <div class="input-group mb-2" style="width: 100%; max-width: 250px;">
+                                                    @if(auth()->check())
+                                                        <!-- Champ de saisie pour les utilisateurs connectés -->
                                                         <input
                                                             type="text"
                                                             name="ID_client"
                                                             class="form-control"
                                                             placeholder="ID du client"
-                                                            value="{{ auth()->user()->ID_client }}"
+                                                            value=""
                                                             style="border-radius: 5px 0 0 5px; border-right: none; background-color: white; padding: 8px 12px;"
                                                             required
                                                         >
-                                                        <button
-                                                            type="submit"
-                                                            class="btn"
-                                                            style="background-color: #82C46C; color: #5a3e2b; border-radius: 0 5px 5px 0; padding: 8px 15px; border: none; font-weight: bold;"
-                                                            onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')"
+                                                    @else
+                                                        <!-- Liste déroulante pour les invités -->
+                                                        <select
+                                                            name="ID_client"
+                                                            class="form-control"
+                                                            style="border-radius: 5px 5px 5px 5px; border-right: none; background-color: navajowhite; padding: 8px 12px; width:250px;"
+                                                            required
                                                         >
-                                                            <i class="bi bi-check-lg"></i> Valider
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('login') }}" class="btn" style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px; padding: 8px 15px; border: none; font-weight: bold;">
-                                                    <i class="bi bi-lock"></i> Connectez-vous pour valider
-                                                </a>
-                                            @endif
+                                                            <option value="" selected disabled>Sélectionnez un client</option>
+                                                            @foreach(\App\Models\Client::orderBy('nom_prenom')->get() as $client)
+                                                                <option value="{{ $client->ID_client }}">
+                                                                    {{ $client->ID_client }} - {{ $client->nom_prenom }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    @endif
+                                                    <button
+                                                        type="submit"
+                                                        class="btn"
+                                                        style="background-color: #82C46C; color: #5a3e2b; border-radius: 5px 5px 5px 5px; padding: 8px 15px; border: none; font-weight: bold;"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir valider cet achat ?')"
+                                                    >
+                                                        <i class="bi bi-check-lg"></i> Valider
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </td>
                                     </tr>
                                     </tfoot>
@@ -140,7 +148,6 @@
             </div>
         </div>
     </div>
-
     <style>
         .btn:hover:not(:disabled) {
             opacity: 0.9;

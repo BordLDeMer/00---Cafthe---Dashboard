@@ -189,13 +189,12 @@ class PanierController extends Controller
      */
     public function validerAchat(Request $request)
     {
-        // Vérifie que le panier n'est pas vide
         $panier = Session::get('panier', []);
+
         if (empty($panier)) {
             return redirect()->route('panier.voir')->with('error', 'Votre panier est vide.');
         }
 
-        // Valider l'ID_client
         $request->validate([
             'ID_client' => 'required|exists:client,ID_client',
         ]);
@@ -203,44 +202,43 @@ class PanierController extends Controller
         DB::beginTransaction();
 
         try {
-            // Calculer le montant total
             $montantCommande = 0;
             foreach ($panier as $id => $details) {
                 $montantCommande += $details['prix_ttc'] * $details['quantite'];
             }
 
-            // Créer la commande
+            $nbLignesCmd = count($panier);
+            $idVendeur = rand(1, 5); // Génère un ID_Vendeur aléatoire entre 1 et 5
+
             $commande = Commande::create([
                 'ID_client' => $request->ID_client,
-                'montant_commande' => $montantCommande, // Modifie cette ligne
+                'montant_commande' => $montantCommande,
                 'statut' => 'en_cours',
+                'date_prise_commande' => now(),
+                'NB_ligne_cmd' => $nbLignesCmd,
+                'ID_Vendeur' => $idVendeur,
             ]);
 
-            // Mettre à jour les stocks et enregistrer les produits de la commande
             foreach ($panier as $id => $details) {
                 $produit = Produit::findOrFail($id);
                 if ($produit->stock < $details['quantite']) {
                     throw new \Exception("Stock insuffisant pour {$produit->designation_produit}.");
                 }
 
-                // Mettre à jour le stock du produit
                 $produit->stock -= $details['quantite'];
                 $produit->ventes += $details['quantite'];
                 $produit->date_vente = now();
+
                 if (!$produit->save()) {
                     throw new \Exception("Erreur lors de la mise à jour du produit {$produit->designation_produit}.");
                 }
 
-                // Enregistrer les produits de la commande dans la table pivot
                 $commande->produits()->attach($id, [
                     'quantite' => $details['quantite'],
                     'prix_unitaire' => $details['prix_ttc'],
                 ]);
-
-                Log::info("Produit {$produit->designation_produit} mis à jour. Nouveau stock: {$produit->stock}");
             }
 
-            // Vider le panier
             Session::forget('panier');
             DB::commit();
 
@@ -251,5 +249,4 @@ class PanierController extends Controller
             return redirect()->route('panier.voir')->with('error', $e->getMessage());
         }
     }
-
 }

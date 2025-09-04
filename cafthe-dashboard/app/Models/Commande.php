@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Commande extends Model
 {
@@ -13,17 +12,16 @@ class Commande extends Model
     protected $table = 'commande';
     protected $primaryKey = 'ID_commande';
 
+    public $timestamps = false; // Désactive les timestamps si nécessaire
+
     protected $fillable = [
         'ID_client',
         'montant_commande',
         'statut',
         'date_prise_commande',
-    ];
-
-    protected $dates = [
-        'date_prise_commande',
-        'created_at',
-        'updated_at',
+        'NB_ligne_cmd',
+        'ID_commande',
+        'ID_Vendeur',
     ];
 
     // Relation avec le modèle Client
@@ -42,11 +40,5 @@ class Commande extends Model
             'produit_id'
         )->withPivot('quantite', 'prix_unitaire')
             ->withTimestamps();
-    }
-
-    // Accessor pour s'assurer que date_prise_commande est un objet Carbon
-    public function getDatePriseCommandeAttribute($value)
-    {
-        return $value ? Carbon::parse($value) : null;
     }
 }
