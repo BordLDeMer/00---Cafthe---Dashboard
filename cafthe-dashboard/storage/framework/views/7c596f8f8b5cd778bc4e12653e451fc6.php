@@ -55,8 +55,8 @@
                                                         <?php echo csrf_field(); ?>
                                                         <?php echo method_field('PATCH'); ?>
                                                         <select name="statut" class="form-select form-select-sm" onchange="this.form.submit()" style="min-width: 130px; display:inline-block;">
-                                                            <option value="en_cours" <?php echo e($commande->statut === 'en_cours' ? 'selected' : ''); ?>>en_cours</option>
                                                             <option value="annulée" <?php echo e($commande->statut === 'annulée' ? 'selected' : ''); ?>>annulée</option>
+                                                            <option value="en_cours" <?php echo e($commande->statut === 'en_cours' ? 'selected' : ''); ?>>en_cours</option>
                                                             <option value="payée" <?php echo e($commande->statut === 'payée' ? 'selected' : ''); ?>>payée</option>
                                                         </select>
                                                     </form>

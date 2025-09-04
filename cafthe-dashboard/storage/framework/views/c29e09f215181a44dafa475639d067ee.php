@@ -8,7 +8,7 @@
                 <div class="card w-100" style="max-width: 1200px; background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden;">
                     <div class="card-body p-4">
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Date de la commande</h5>
                                 <p>
                                     <?php if($commande->date_prise_commande): ?>
@@ -22,13 +22,11 @@
                                     <?php endif; ?>
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Statut</h5>
                                 <p><?php echo e(ucfirst(str_replace('_', ' ', $commande->statut))); ?></p>
                             </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Montant total</h5>
                                 <p><?php echo e(number_format($commande->montant_commande, 2, ',', ' ')); ?> €</p>
                             </div>
@@ -49,7 +47,7 @@
                                         <tbody>
                                         <?php $__currentLoopData = $commande->produits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $produit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td style="padding: 12px; text-align: center;"><?php echo e($produit->designation_produit); ?></td>
+                                                <td style="padding: 12px; text-align: center;"><?php echo e($produit->pivot->designation_produit ?? $produit->designation_produit); ?></td>
                                                 <td style="padding: 12px; text-align: center;"><?php echo e(number_format($produit->pivot->prix_unitaire, 2, ',', ' ')); ?> €</td>
                                                 <td style="padding: 12px; text-align: center;"><?php echo e($produit->pivot->quantite); ?></td>
                                                 <td style="padding: 12px; text-align: center;"><?php echo e(number_format($produit->pivot->prix_unitaire * $produit->pivot->quantite, 2, ',', ' ')); ?> €</td>

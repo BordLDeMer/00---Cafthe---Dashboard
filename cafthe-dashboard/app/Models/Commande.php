@@ -38,7 +38,7 @@ class Commande extends Model
             'commande_produit',
             'commande_id',
             'produit_id'
-        )->withPivot('quantite', 'prix_unitaire')
+        )->withPivot('quantite', 'prix_unitaire', 'designation_produit')
             ->withTimestamps();
     }
 }

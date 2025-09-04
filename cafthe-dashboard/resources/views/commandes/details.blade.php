@@ -9,7 +9,7 @@
                 <div class="card w-100" style="max-width: 1200px; background-color: #ccbba7; border: none; border-radius: 10px; overflow: hidden;">
                     <div class="card-body p-4">
                         <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Date de la commande</h5>
                                 <p>
                                     @if($commande->date_prise_commande)
@@ -22,13 +22,11 @@
                                     @endif
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Statut</h5>
                                 <p>{{ ucfirst(str_replace('_', ' ', $commande->statut)) }}</p>
                             </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <h5 style="color: #5a3e2b;">Montant total</h5>
                                 <p>{{ number_format($commande->montant_commande, 2, ',', ' ') }} €</p>
                             </div>
@@ -49,7 +47,7 @@
                                         <tbody>
                                         @foreach($commande->produits as $produit)
                                             <tr>
-                                                <td style="padding: 12px; text-align: center;">{{ $produit->designation_produit }}</td>
+                                                <td style="padding: 12px; text-align: center;">{{ $produit->pivot->designation_produit ?? $produit->designation_produit }}</td>
                                                 <td style="padding: 12px; text-align: center;">{{ number_format($produit->pivot->prix_unitaire, 2, ',', ' ') }} €</td>
                                                 <td style="padding: 12px; text-align: center;">{{ $produit->pivot->quantite }}</td>
                                                 <td style="padding: 12px; text-align: center;">{{ number_format($produit->pivot->prix_unitaire * $produit->pivot->quantite, 2, ',', ' ') }} €</td>

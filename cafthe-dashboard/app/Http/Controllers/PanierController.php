@@ -236,6 +236,7 @@ class PanierController extends Controller
                 $commande->produits()->attach($id, [
                     'quantite' => $details['quantite'],
                     'prix_unitaire' => $details['prix_ttc'],
+                    'designation_produit' => $details['designation_produit'] ?? $produit->designation_produit,
                 ]);
             }
 
