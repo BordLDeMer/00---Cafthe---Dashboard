@@ -109,7 +109,7 @@
                                                             required
                                                         >
                                                             <option value="" selected disabled>Sélectionnez un client</option>
-                                                            @foreach(\App\Models\Client::orderBy('nom_prenom')->get() as $client)
+                                                            @foreach(\App\Models\Client::orderBy('ID_client')->get() as $client)
                                                                 <option value="{{ $client->ID_client }}">
                                                                     {{ $client->ID_client }} - {{ $client->nom_prenom }}
                                                                 </option>

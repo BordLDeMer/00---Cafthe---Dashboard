@@ -54,8 +54,8 @@
                                                         @csrf
                                                         @method('PATCH')
                                                         <select name="statut" class="form-select form-select-sm" onchange="this.form.submit()" style="min-width: 130px; display:inline-block;">
-                                                            <option value="en_cours" {{ $commande->statut === 'en_cours' ? 'selected' : '' }}>en_cours</option>
                                                             <option value="annulée" {{ $commande->statut === 'annulée' ? 'selected' : '' }}>annulée</option>
+                                                            <option value="en_cours" {{ $commande->statut === 'en_cours' ? 'selected' : '' }}>en_cours</option>
                                                             <option value="payée" {{ $commande->statut === 'payée' ? 'selected' : '' }}>payée</option>
                                                         </select>
                                                     </form>

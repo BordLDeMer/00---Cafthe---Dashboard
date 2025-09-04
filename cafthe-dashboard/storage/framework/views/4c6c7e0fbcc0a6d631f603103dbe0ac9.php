@@ -111,7 +111,7 @@
                                                             required
                                                         >
                                                             <option value="" selected disabled>Sélectionnez un client</option>
-                                                            <?php $__currentLoopData = \App\Models\Client::orderBy('nom_prenom')->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <?php $__currentLoopData = \App\Models\Client::orderBy('ID_client')->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                 <option value="<?php echo e($client->ID_client); ?>">
                                                                     <?php echo e($client->ID_client); ?> - <?php echo e($client->nom_prenom); ?>
 
