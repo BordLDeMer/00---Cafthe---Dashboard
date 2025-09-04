@@ -35,14 +35,33 @@
                                             <td style="padding: 12px; text-align: center;"><?php echo e($commande->ID_commande); ?></td>
                                             <td style="padding: 12px; text-align: center;">
                                                 <?php if($commande->date_prise_commande): ?>
-                                                    <?php echo e($commande->date_prise_commande->format('d/m/Y H:i')); ?>
+                                                    <?php
+                                                        $date = $commande->date_prise_commande;
+                                                        if (is_string($date)) {
+                                                            $date = \Carbon\Carbon::parse($date);
+                                                        }
+                                                    ?>
+                                                    <?php echo e($date->format('d/m/Y H:i')); ?>
 
                                                 <?php else: ?>
                                                     N/A
                                                 <?php endif; ?>
                                             </td>
                                             <td style="padding: 12px; text-align: center;"><?php echo e(number_format($commande->montant_commande, 2, ',', ' ')); ?> €</td>
-                                            <td style="padding: 12px; text-align: center;"><?php echo e(ucfirst(str_replace('_', ' ', $commande->statut))); ?></td>
+                                            <td style="padding: 12px; text-align: center;">
+                                                <div class="d-flex align-items-center justify-content-center" style="gap:8px;">
+                                                    <span><?php echo e(ucfirst(str_replace('_', ' ', $commande->statut))); ?></span>
+                                                    <form action="<?php echo e(route('commandes.updateStatut', $commande->ID_commande)); ?>" method="POST" style="margin:0;">
+                                                        <?php echo csrf_field(); ?>
+                                                        <?php echo method_field('PATCH'); ?>
+                                                        <select name="statut" class="form-select form-select-sm" onchange="this.form.submit()" style="min-width: 130px; display:inline-block;">
+                                                            <option value="en_cours" <?php echo e($commande->statut === 'en_cours' ? 'selected' : ''); ?>>en_cours</option>
+                                                            <option value="annulée" <?php echo e($commande->statut === 'annulée' ? 'selected' : ''); ?>>annulée</option>
+                                                            <option value="payée" <?php echo e($commande->statut === 'payée' ? 'selected' : ''); ?>>payée</option>
+                                                        </select>
+                                                    </form>
+                                                </div>
+                                            </td>
                                             <td style="padding: 12px; text-align: center;">
                                                 <a href="<?php echo e(route('commandes.details', $commande->ID_commande)); ?>" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 5px 10px; text-decoration: none;">
                                                     Détails
@@ -50,7 +69,6 @@
                                             </td>
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                                     </tbody>
                                 </table>
                             </div>

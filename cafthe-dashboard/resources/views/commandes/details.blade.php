@@ -11,7 +11,16 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <h5 style="color: #5a3e2b;">Date de la commande</h5>
-                                <p>{{ $commande->date_prise_commande ? $commande->date_prise_commande->format('d/m/Y H:i') : 'N/A' }}</p>
+                                <p>
+                                    @if($commande->date_prise_commande)
+                                        @php
+                                            $date = is_string($commande->date_prise_commande) ? \Carbon\Carbon::parse($commande->date_prise_commande) : $commande->date_prise_commande;
+                                        @endphp
+                                        {{ $date->format('d/m/Y H:i') }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </p>
                             </div>
                             <div class="col-md-6">
                                 <h5 style="color: #5a3e2b;">Statut</h5>

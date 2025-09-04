@@ -30,4 +30,19 @@ class CommandeController extends Controller
         // Passe la commande à la vue des détails
         return view('commandes.details', compact('commande'));
     }
+
+    public function updateStatut(Request $request, $id_commande)
+    {
+        // Validation du statut
+        $validated = $request->validate([
+            'statut' => 'required|in:en_cours,annulée,payée',
+        ]);
+
+        // Récupération et mise à jour
+        $commande = Commande::findOrFail($id_commande);
+        $commande->statut = $validated['statut'];
+        $commande->save();
+
+        return back()->with('success', 'Statut de la commande mis à jour.');
+    }
 }

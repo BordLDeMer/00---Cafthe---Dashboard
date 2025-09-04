@@ -35,13 +35,32 @@
                                             <td style="padding: 12px; text-align: center;">{{ $commande->ID_commande }}</td>
                                             <td style="padding: 12px; text-align: center;">
                                                 @if($commande->date_prise_commande)
-                                                    {{ $commande->date_prise_commande->format('d/m/Y H:i') }}
+                                                    @php
+                                                        $date = $commande->date_prise_commande;
+                                                        if (is_string($date)) {
+                                                            $date = \Carbon\Carbon::parse($date);
+                                                        }
+                                                    @endphp
+                                                    {{ $date->format('d/m/Y H:i') }}
                                                 @else
                                                     N/A
                                                 @endif
                                             </td>
                                             <td style="padding: 12px; text-align: center;">{{ number_format($commande->montant_commande, 2, ',', ' ') }} €</td>
-                                            <td style="padding: 12px; text-align: center;">{{ ucfirst(str_replace('_', ' ', $commande->statut)) }}</td>
+                                            <td style="padding: 12px; text-align: center;">
+                                                <div class="d-flex align-items-center justify-content-center" style="gap:8px;">
+                                                    <span>{{ ucfirst(str_replace('_', ' ', $commande->statut)) }}</span>
+                                                    <form action="{{ route('commandes.updateStatut', $commande->ID_commande) }}" method="POST" style="margin:0;">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <select name="statut" class="form-select form-select-sm" onchange="this.form.submit()" style="min-width: 130px; display:inline-block;">
+                                                            <option value="en_cours" {{ $commande->statut === 'en_cours' ? 'selected' : '' }}>en_cours</option>
+                                                            <option value="annulée" {{ $commande->statut === 'annulée' ? 'selected' : '' }}>annulée</option>
+                                                            <option value="payée" {{ $commande->statut === 'payée' ? 'selected' : '' }}>payée</option>
+                                                        </select>
+                                                    </form>
+                                                </div>
+                                            </td>
                                             <td style="padding: 12px; text-align: center;">
                                                 <a href="{{ route('commandes.details', $commande->ID_commande) }}" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 5px 10px; text-decoration: none;">
                                                     Détails
@@ -49,7 +68,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
                                     </tbody>
                                 </table>
                             </div>

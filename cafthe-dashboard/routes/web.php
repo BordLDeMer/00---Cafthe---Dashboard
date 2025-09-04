@@ -58,5 +58,6 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
     // Routes pour afficher les commandes client
         Route::get('/commandes/client/{id_client}', [CommandeController::class, 'commandesParClient'])->name('commandes.client');
         Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
+        Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.updateStatut');
 
 // });
