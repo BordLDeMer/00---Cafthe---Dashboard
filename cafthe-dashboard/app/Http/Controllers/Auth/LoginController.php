@@ -62,17 +62,23 @@ class LoginController extends Controller
             return $this->sendLoginResponse($request);
         }
 
-        // Fallback: handle legacy plain-text passwords by migrating them to hashed
+        // Fallbacks: handle various storage cases (hashed, legacy plain-text)
         $user = Vendeur::where('mail', $request->input('mail'))->first();
         if ($user) {
             $inputPassword = (string) $request->input('mdp');
-
-            // If the stored password is not a valid hash and matches plain-text input
             $stored = (string) $user->mdp;
-            $looksHashed = preg_match('/^\$2y\$\d{2}\$.{53}$/', $stored) === 1; // bcrypt format
 
-            if (!$looksHashed && hash_equals($stored, $inputPassword)) {
-                // Rehash and login the user seamlessly
+            // Case 1: stored is a hash compatible with Hash::check but attempt failed (be defensive)
+            if (!empty($stored) && Hash::check($inputPassword, $stored)) {
+                $this->guard()->login($user, $request->filled('remember'));
+                if ($request->hasSession()) {
+                    $request->session()->put('auth.password_confirmed_at', time());
+                }
+                return $this->sendLoginResponse($request);
+            }
+
+            // Case 2: legacy plain-text stored password -> migrate to hashed on-the-fly
+            if ($stored !== '' && hash_equals($stored, $inputPassword)) {
                 $user->mdp = Hash::make($inputPassword);
                 $user->save();
                 $this->guard()->login($user, $request->filled('remember'));

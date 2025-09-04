@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\Route;
 // Routes publiques (accessibles sans authentification)
 // =============================================
 
-// Route d'accueil
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-// Route pour la page home
-Route::get('/home', [DashboardController::class, 'home'])->name('home');
 
 // Routes pour l'authentification des vendeurs
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
@@ -26,8 +21,13 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 // =============================================
 // Routes protégées (nécessitent une authentification)
 // =============================================
-// Route::middleware(['auth:vendeur'])->group(function () {
+Route::middleware(['auth:vendeur'])->group(function () {
 
+    // Route d'accueil
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Route pour la page home
+    Route::get('/home', [DashboardController::class, 'home'])->name('home');
     // Routes pour les clients
     Route::resource('clients', ClientController::class);
 
@@ -43,7 +43,7 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
         Route::get('/{produit}', [ProduitController::class, 'show'])->name('produits.show');
         Route::get('/{produit}/edit', [ProduitController::class, 'edit'])->name('produits.edit');
         Route::put('/{produit}', [ProduitController::class, 'update'])->name('produits.update');
-});
+    });
 
     // Routes pour le panier
     Route::prefix('panier')->group(function () {
@@ -60,4 +60,4 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
         Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
         Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.updateStatut');
 
-// });
+});

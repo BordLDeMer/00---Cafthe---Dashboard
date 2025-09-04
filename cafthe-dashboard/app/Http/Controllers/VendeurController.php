@@ -30,13 +30,16 @@ class VendeurController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:vendeur,email',
-            'phone' => 'nullable|string|max:20',
-            // Add other validation rules as needed
+            'nom_prenom' => 'required|string|max:255',
+            'mail' => 'required|email|unique:vendeur,mail',
+            'tel' => 'nullable|string|max:20',
+            'mdp' => 'required|string|min:6',
         ]);
 
-        Vendeur::create($validated);
+        $data = $validated;
+        $data['mdp'] = \Illuminate\Support\Facades\Hash::make($validated['mdp']);
+
+        Vendeur::create($data);
 
         return redirect()->route('vendeurs.index')
             ->with('success', 'Vendeur créé avec succès.');
@@ -64,13 +67,20 @@ class VendeurController extends Controller
     public function update(Request $request, Vendeur $vendeur)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:vendeur,email,' . $vendeur->id,
-            'phone' => 'nullable|string|max:20',
-            // Add other validation rules as needed
+            'nom_prenom' => 'required|string|max:255',
+            'mail' => 'required|email|unique:vendeur,mail,' . $vendeur->getKey() . ','.$vendeur->getKeyName(),
+            'tel' => 'nullable|string|max:20',
+            'mdp' => 'nullable|string|min:6',
         ]);
 
-        $vendeur->update($validated);
+        $data = $validated;
+        if (!empty($validated['mdp'])) {
+            $data['mdp'] = \Illuminate\Support\Facades\Hash::make($validated['mdp']);
+        } else {
+            unset($data['mdp']);
+        }
+
+        $vendeur->update($data);
 
         return redirect()->route('vendeurs.index')
             ->with('success', 'Vendeur mis à jour avec succès.');

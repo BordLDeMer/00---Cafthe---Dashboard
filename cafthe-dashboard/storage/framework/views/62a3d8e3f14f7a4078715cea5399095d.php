@@ -39,14 +39,14 @@
                         <?php endif; ?>
                     </a>
                 </li>
-                <?php if(auth()->guard()->check()): ?>
+                <?php if(auth('vendeur')->check()): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle me-1"></i> <?php echo e(Auth::user()->name); ?>
+                            <i class="bi bi-person-circle me-1"></i> <?php echo e(auth('vendeur')->user()->nom_prenom ?? 'Vendeur'); ?>
 
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="<?php echo e(route('profile.edit')); ?>">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="<?php echo e(route('vendeurs.edit', auth('vendeur')->user()->getKey())); ?>">Mon profil</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="<?php echo e(route('logout')); ?>">
