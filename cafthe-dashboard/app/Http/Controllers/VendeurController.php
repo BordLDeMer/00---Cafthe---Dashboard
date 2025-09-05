@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendeur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class VendeurController extends Controller
 {
     /**
-     * Display a listing of the vendeurs.
+     * Affiche la liste des vendeurs (réservé aux chefs).
      */
     public function index()
     {
@@ -17,7 +19,7 @@ class VendeurController extends Controller
     }
 
     /**
-     * Show the form for creating a new vendeur.
+     * Affiche le formulaire de création d'un nouveau vendeur (réservé aux chefs).
      */
     public function create()
     {
@@ -25,7 +27,7 @@ class VendeurController extends Controller
     }
 
     /**
-     * Store a newly created vendeur in storage.
+     * Enregistre un nouveau vendeur (réservé aux chefs).
      */
     public function store(Request $request)
     {
@@ -37,16 +39,17 @@ class VendeurController extends Controller
         ]);
 
         $data = $validated;
-        $data['mdp'] = \Illuminate\Support\Facades\Hash::make($validated['mdp']);
+        $data['mdp'] = Hash::make($validated['mdp']);
 
         Vendeur::create($data);
 
-        return redirect()->route('vendeurs.index')
+        return redirect()
+            ->route('vendeurs.index')
             ->with('success', 'Vendeur créé avec succès.');
     }
 
     /**
-     * Display the specified vendeur.
+     * Affiche les détails d'un vendeur (réservé aux chefs).
      */
     public function show(Vendeur $vendeur)
     {
@@ -54,7 +57,7 @@ class VendeurController extends Controller
     }
 
     /**
-     * Show the form for editing the specified vendeur.
+     * Affiche le formulaire d'édition d'un vendeur (réservé aux chefs).
      */
     public function edit(Vendeur $vendeur)
     {
@@ -62,38 +65,79 @@ class VendeurController extends Controller
     }
 
     /**
-     * Update the specified vendeur in storage.
+     * Met à jour un vendeur (réservé aux chefs).
      */
     public function update(Request $request, Vendeur $vendeur)
     {
         $validated = $request->validate([
             'nom_prenom' => 'required|string|max:255',
-            'mail' => 'required|email|unique:vendeur,mail,' . $vendeur->getKey() . ','.$vendeur->getKeyName(),
+            'mail' => 'required|email|unique:vendeur,mail,' . $vendeur->ID_Vendeur . ',ID_Vendeur',
             'tel' => 'nullable|string|max:20',
             'mdp' => 'nullable|string|min:6',
         ]);
 
         $data = $validated;
+
         if (!empty($validated['mdp'])) {
-            $data['mdp'] = \Illuminate\Support\Facades\Hash::make($validated['mdp']);
+            $data['mdp'] = Hash::make($validated['mdp']);
         } else {
             unset($data['mdp']);
         }
 
         $vendeur->update($data);
 
-        return redirect()->route('vendeurs.index')
+        return redirect()
+            ->route('vendeurs.index')
             ->with('success', 'Vendeur mis à jour avec succès.');
     }
 
     /**
-     * Remove the specified vendeur from storage.
+     * Supprime un vendeur (réservé aux chefs).
      */
     public function destroy(Vendeur $vendeur)
     {
         $vendeur->delete();
 
-        return redirect()->route('vendeurs.index')
+        return redirect()
+            ->route('vendeurs.index')
             ->with('success', 'Vendeur supprimé avec succès.');
+    }
+
+    /**
+     * Affiche le profil du vendeur connecté.
+     */
+    public function monProfil()
+    {
+        $vendeur = Auth::guard('vendeur')->user();
+        return view('vendeurs.profil', compact('vendeur'));
+    }
+
+    /**
+     * Met à jour le profil du vendeur connecté.
+     */
+    public function mettreAJourMonProfil(Request $request)
+    {
+        $vendeur = Auth::guard('vendeur')->user();
+
+        $validated = $request->validate([
+            'nom_prenom' => 'required|string|max:255',
+            'mail' => 'required|email|unique:vendeur,mail,' . $vendeur->ID_Vendeur . ',ID_Vendeur',
+            'tel' => 'nullable|string|max:20',
+            'mdp' => 'nullable|string|min:6',
+        ]);
+
+        $data = $validated;
+
+        if (!empty($validated['mdp'])) {
+            $data['mdp'] = Hash::make($validated['mdp']);
+        } else {
+            unset($data['mdp']);
+        }
+
+        $vendeur->update($data);
+
+        return redirect()
+            ->route('vendeurs.mon_profil')
+            ->with('success', 'Profil mis à jour avec succès !');
     }
 }

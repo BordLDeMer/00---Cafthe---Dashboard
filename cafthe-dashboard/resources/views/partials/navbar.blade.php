@@ -15,9 +15,24 @@
                 <li class="nav-item">
                     <a class="nav-link fs-5 ps-4 text-white" href="{{ route('clients.index') }}">Gestion des Clients</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link fs-5 ps-4 text-white" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
-                </li>
+                @php($vendeur = auth('vendeur')->user())
+                @if($vendeur)
+                    @php($chefVal = isset($vendeur->Chef) ? $vendeur->Chef : (isset($vendeur->chef) ? $vendeur->chef : (isset($vendeur->is_chef) ? $vendeur->is_chef : null)))
+                    @php($isChef = is_bool($chefVal) ? $chefVal : (is_numeric($chefVal) ? ((int)$chefVal === 1) : (is_string($chefVal) ? in_array(strtolower(trim($chefVal)), ['oui','yes','1']) : false)))
+                @else
+                    @php($isChef = false)
+                @endif
+                @if($isChef)
+                    <li class="nav-item">
+                        <a class="nav-link fs-5 ps-4 text-white" href="{{ route('vendeurs.index') }}">Gestion des Vendeurs</a>
+                    </li>
+                @endif
+                <!-- Lien "Mon Profil" pour tous les vendeurs -->
+                @if(auth('vendeur')->check())
+                    <li class="nav-item">
+                        <a class="nav-link fs-5 ps-4 text-white" href="{{ route('vendeurs.mon_profil') }}">Mon Profil</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link fs-5 ps-4 text-white" href="{{ route('produits.index') }}">Nos Produits</a>
                 </li>
@@ -39,20 +54,13 @@
                     </a>
                 </li>
                 @if(auth('vendeur')->check())
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" title="Se déconnecter">
                             <i class="bi bi-person-circle me-1"></i> {{ auth('vendeur')->user()->nom_prenom ?? 'Vendeur' }}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ route('vendeurs.edit', auth('vendeur')->user()->getKey()) }}">Mon profil</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Déconnexion</button>
-                                </form>
-                            </li>
-                        </ul>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 @endif
             </ul>

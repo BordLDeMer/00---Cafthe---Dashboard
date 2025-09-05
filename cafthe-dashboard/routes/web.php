@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendeurController;
@@ -11,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 // =============================================
 // Routes publiques (accessibles sans authentification)
 // =============================================
-
-
-// Routes pour l'authentification des vendeurs
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
@@ -22,17 +18,12 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 // Routes protégées (nécessitent une authentification)
 // =============================================
 Route::middleware(['auth:vendeur'])->group(function () {
-
-    // Route d'accueil
+    // Route d'accueil et home
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Route pour la page home
     Route::get('/home', [DashboardController::class, 'home'])->name('home');
+
     // Routes pour les clients
     Route::resource('clients', ClientController::class);
-
-    // Routes pour les vendeurs
-    Route::resource('vendeurs', VendeurController::class);
 
     // Routes pour les produits
     Route::prefix('produits')->group(function () {
@@ -55,9 +46,17 @@ Route::middleware(['auth:vendeur'])->group(function () {
         Route::post('/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
     });
 
-    // Routes pour afficher les commandes client
-        Route::get('/commandes/client/{id_client}', [CommandeController::class, 'commandesParClient'])->name('commandes.client');
-        Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
-        Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.updateStatut');
+    // Routes pour les commandes
+    Route::get('/commandes/client/{id_client}', [CommandeController::class, 'commandesParClient'])->name('commandes.client');
+    Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
+    Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.updateStatut');
 
+    // Routes pour les vendeurs
+    Route::get('/mon-profil', [VendeurController::class, 'monProfil'])->name('vendeurs.mon_profil');
+    Route::put('/mon-profil', [VendeurController::class, 'mettreAJourMonProfil'])->name('vendeurs.mettre_a_jour_mon_profil');
+
+    // Routes pour gérer les profils des autres vendeurs (réservées aux chefs)
+    Route::middleware('vendeur.chef')->group(function () {
+        Route::resource('vendeurs', VendeurController::class);
+    });
 });
