@@ -1,11 +1,28 @@
 <?php
+
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendeurController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CommandeController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// =============================================
+// Fonction pour vérifier si le vendeur est un chef
+// =============================================
+function isChef($vendeur) {
+    $chefVal = $vendeur->Chef ?? ($vendeur->chef ?? ($vendeur->is_chef ?? null));
+    if (is_bool($chefVal)) {
+        return $chefVal;
+    } elseif (is_numeric($chefVal)) {
+        return (int)$chefVal === 1;
+    } elseif (is_string($chefVal)) {
+        return in_array(strtolower(trim($chefVal)), ['oui', 'yes', '1']);
+    }
+    return false;
+}
 
 // =============================================
 // Routes publiques (accessibles sans authentification)
@@ -51,12 +68,67 @@ Route::middleware(['auth:vendeur'])->group(function () {
     Route::get('/commandes/{commande}', [CommandeController::class, 'details'])->name('commandes.details');
     Route::patch('/commandes/{commande}/statut', [CommandeController::class, 'updateStatut'])->name('commandes.updateStatut');
 
-    // Routes pour les vendeurs
+    // Routes pour le profil du vendeur connecté (accessibles à tous les vendeurs)
     Route::get('/mon-profil', [VendeurController::class, 'monProfil'])->name('vendeurs.mon_profil');
+    Route::get('/mon-profil/edit', [VendeurController::class, 'editMonProfil'])->name('vendeurs.edit_mon_profil');
     Route::put('/mon-profil', [VendeurController::class, 'mettreAJourMonProfil'])->name('vendeurs.mettre_a_jour_mon_profil');
 
-    // Routes pour gérer les profils des autres vendeurs (réservées aux chefs)
-    Route::middleware('vendeur.chef')->group(function () {
-        Route::resource('vendeurs', VendeurController::class);
+    // Routes pour gérer les vendeurs (réservées aux chefs)
+    Route::prefix('vendeurs')->group(function () {
+        Route::get('/', function () {
+            $vendeur = auth('vendeur')->user();
+            if (!isChef($vendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->index();
+        })->name('vendeurs.index');
+
+        Route::get('/create', function () {
+            $vendeur = auth('vendeur')->user();
+            if (!isChef($vendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->create();
+        })->name('vendeurs.create');
+
+        Route::post('/', function (Request $request) {
+            $vendeur = auth('vendeur')->user();
+            if (!isChef($vendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->store($request);
+        })->name('vendeurs.store');
+
+        Route::get('/{vendeur}', function (App\Models\Vendeur $vendeur) {
+            $currentVendeur = auth('vendeur')->user();
+            if (!isChef($currentVendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->show($vendeur);
+        })->name('vendeurs.show');
+
+        Route::get('/{vendeur}/edit', function (App\Models\Vendeur $vendeur) {
+            $currentVendeur = auth('vendeur')->user();
+            if (!isChef($currentVendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->edit($vendeur);
+        })->name('vendeurs.edit');
+
+        Route::put('/{vendeur}', function (Request $request, App\Models\Vendeur $vendeur) {
+            $currentVendeur = auth('vendeur')->user();
+            if (!isChef($currentVendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->update($request, $vendeur);
+        })->name('vendeurs.update');
+
+        Route::delete('/{vendeur}', function (App\Models\Vendeur $vendeur) {
+            $currentVendeur = auth('vendeur')->user();
+            if (!isChef($currentVendeur)) {
+                abort(403, 'Accès réservé aux chefs.');
+            }
+            return app(VendeurController::class)->destroy($vendeur);
+        })->name('vendeurs.destroy');
     });
 });

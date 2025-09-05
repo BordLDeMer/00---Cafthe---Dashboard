@@ -37,12 +37,9 @@ class VendeurController extends Controller
             'tel' => 'nullable|string|max:20',
             'mdp' => 'required|string|min:6',
         ]);
-
         $data = $validated;
         $data['mdp'] = Hash::make($validated['mdp']);
-
         Vendeur::create($data);
-
         return redirect()
             ->route('vendeurs.index')
             ->with('success', 'Vendeur créé avec succès.');
@@ -75,17 +72,13 @@ class VendeurController extends Controller
             'tel' => 'nullable|string|max:20',
             'mdp' => 'nullable|string|min:6',
         ]);
-
         $data = $validated;
-
         if (!empty($validated['mdp'])) {
             $data['mdp'] = Hash::make($validated['mdp']);
         } else {
             unset($data['mdp']);
         }
-
         $vendeur->update($data);
-
         return redirect()
             ->route('vendeurs.index')
             ->with('success', 'Vendeur mis à jour avec succès.');
@@ -97,7 +90,6 @@ class VendeurController extends Controller
     public function destroy(Vendeur $vendeur)
     {
         $vendeur->delete();
-
         return redirect()
             ->route('vendeurs.index')
             ->with('success', 'Vendeur supprimé avec succès.');
@@ -110,6 +102,15 @@ class VendeurController extends Controller
     {
         $vendeur = Auth::guard('vendeur')->user();
         return view('vendeurs.profil', compact('vendeur'));
+    }
+
+    /**
+     * Affiche le formulaire d'édition du profil du vendeur connecté.
+     */
+    public function editMonProfil()
+    {
+        $vendeur = Auth::guard('vendeur')->user();
+        return view('vendeurs.edit_mon_profil', compact('vendeur'));
     }
 
     /**
@@ -127,7 +128,6 @@ class VendeurController extends Controller
         ]);
 
         $data = $validated;
-
         if (!empty($validated['mdp'])) {
             $data['mdp'] = Hash::make($validated['mdp']);
         } else {

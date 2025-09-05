@@ -8,7 +8,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #5a3e2b; color: white; border: none; border-radius: 10px 10px 0 0 !important;">
                         <h4 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Mon Profil</h4>
                     </div>
-                    <div class="card-body" style="background-color: white; color: #5a3e2b; padding: 20px; width: 100%;">
+                    <div class="card-body" style="background-color: white; color: #5a3e2b; padding: 20px;">
                         @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
@@ -51,7 +51,7 @@
 
                         <!-- Bouton pour modifier le profil -->
                         <div class="d-flex justify-content-end mt-4">
-                            <a href="{{ route('vendeurs.edit', ['vendeur' => $vendeur->ID_Vendeur]) }}" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 8px 15px;">
+                            <a href="{{ route('vendeurs.edit_mon_profil') }}" class="btn" style="background-color: #8b7355; color: white; border-radius: 5px; padding: 8px 15px;">
                                 <i class="bi bi-pencil-square me-1"></i> Modifier mon profil
                             </a>
                         </div>
